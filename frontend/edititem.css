@@ -101,11 +101,12 @@ form {
 }
 form input[type="text"], form input[type="number"] {
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     border: none;
     border-radius: 20px;
     background-color: #afabab;
-    
+    margin-top: 10px;
+    width: 300px;
 }
 
 
@@ -122,6 +123,12 @@ form input[type="text"], form input[type="number"] {
     border-radius: 20px; /* Đặt viền tròn */
     padding: 10px 20px; /* Điều chỉnh kích thước của button */
     margin: 20px; /* Điều chỉnh khoảng cách giữa các button */
+}
+
+._input {
+    display: inline;
+    justify-content: inline;
+   
 }
 
 /* ------------------------------------------------------- */
