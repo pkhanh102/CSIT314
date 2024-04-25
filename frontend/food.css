@@ -70,13 +70,22 @@ a {
 }
 
 /* ------------------------------------------------------- */
+
+
+.search_container {
+    margin-top: 20px;
+    display: flex; 
+    justify-content: flex-end;
+}
+
 .search-box {
     border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 8px;
-    font-size: 14px;
-    width: 200px;
-    position: relative;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 15px;
+    width: 300px;
+    height: 50px;
+    margin-top: 20px;
 }
 
 .search-box::before {
@@ -87,39 +96,154 @@ a {
     transform: translateY(-50%);
     width: 16px;
     height: 16px;
-    background-image: url("images/search-icon.png");
     background-size: cover;
 }
 
 .search-icon {
     border: none;
-    border-radius: 50%;
-    padding: 8px;
-    margin-left: -24px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    size: 20px;
+    transition: grey 0.2s ease;
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+    
 }
 
-.search-icon:hover {
-    background-color: #f5f5f5;
+.search-button {
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    margin: 22px;
+    margin-left: 15px;
+    margin-right: 10%;
 }
-/* restaurant */
+
+.search-button:hover {
+    background-color: gainsboro;
+}
+
+/* ------------------------------------------------------- */
+/* Filter By Rating & Distance (Do it later)  */
+
+#filter-options {
+    /* Existing styles for options (background, borders, etc.) */
+    display: none; /* Initially hidden */
+    position: absolute; /* Position relative to the button */
+    top: 100%; /* Offset from button's bottom */
+    left: 0; /* Align to button's left side */
+    /* Consider adding a down arrow indicator here, e.g., using a before pseudo-element */
+}
+
+.search-button.active + #filter-options {
+    display: block; /* Show options when button is active (add active class in JavaScript) */
+}
+
+.search-button.active::after {
+    /* Optional: Add a down arrow indicator that flips on click */
+    content: "\u25BC"; /* Down arrow character */
+    font-size: 12px;
+    position: absolute;
+    right: 5px; /* Adjust positioning */
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg); /* Flip the arrow */
+    transition: transform 0.2s ease-in-out; /* Smooth transition */
+}
+
+.search-button:not(.active)::after {
+    /* Style the arrow differently when not active (optional) */
+    transform: translateY(-50%); /* Remove rotation */
+}
+
+/* ------------------------------------------------------- */
+
+/* Category */
+
+.category {
+    display: inline;
+}
+
+#category-title {
+    color: #FFFFFF;
+    font-size: 30px;
+    margin-left: 11%;
+    margin-top: 2%;
+}
+
+.category_container {
+    clear: both;
+    display: flex;
+    justify-content: center;
+}
+
+.category_img {
+    width: 50px;
+    height: 50px;
+    margin-top: 20px;
+    margin-left: 55px;
+    margin-right: 55px;
+}
+
+.category_text {
+    margin-left: 40px;
+    margin-right: 40px;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding-bottom: 50px;
+}
+
+/* ------------------------------------------------------- */
+
+/* Restaurant */
+
+.restaurant {
+    margin-bottom: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.restaurant-container {
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+}
+
+.restaurant-img {
+    box-shadow: 2px 2px 2px black;
+    width: 250px;
+    height: 150px;
+    border-radius: 10%;
+}
+
+.restaurant-name {
+    font-size: 23px;
+    padding-left: 2%;
+    color: #FFFFFF;
+}
+
+.restaurant span {
+    margin-right: 10px;
+}
+
+.rating {
+    color: yellow;
+    padding-left: 2%;
+    font-size: 18px;
+}
+
+.distance {
+    color: lightgreen;
+    font-size: 18px;
+}
+
+
+/* ------------------------------------------------------- */
+
+
 body {
     font-family: Arial, sans-serif;
 }
-.restaurant {
-    margin-bottom: 10px;
-}
-.restaurant span {
-    margin-right: 5px;
-}
-.rating {
-    color: green;
-}
-.distance {
-    color: blue;
-}
+
 /*----*/
 footer {
     background-color: #1F1F1F;
@@ -133,7 +257,10 @@ footer {
 
 hr {
     border-color: #1F1F1F;  /* Change the color */
-    border-width: 1.5px;  /* Change the thickness */
+    border-width: 0.7px;  /* Change the thickness */
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 

@@ -70,14 +70,16 @@ a {
 }
 
 /* ------------------------------------------------------- */
+
 .box {
     background-color: #fff;
     border: 1px round #ccc;
-    padding: 20px;
+    padding: 30px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     margin: 20px auto;
     max-width: 600px;
     border-radius: 20px;
+    margin-top: 100px;
 }
 
 p {
@@ -90,8 +92,11 @@ form {
 }
 .label-input {
     display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px; /* Điều chỉnh khoảng cách giữa văn bản và input */
+    vertical-align: middle; /* Điều chỉnh khoảng cách giữa văn bản và input */
+}
+
+label {
+    margin-left: 30px;
 }
 
 .input-field {
@@ -123,12 +128,14 @@ form input[type="text"], form input[type="number"] {
     border-radius: 20px; /* Đặt viền tròn */
     padding: 10px 20px; /* Điều chỉnh kích thước của button */
     margin: 20px; /* Điều chỉnh khoảng cách giữa các button */
+    width: 150px;
+    height: 50px;
+    font-size: 18px;
 }
 
 ._input {
     display: inline;
     justify-content: inline;
-   
 }
 
 /* ------------------------------------------------------- */

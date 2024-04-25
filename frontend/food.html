@@ -21,89 +21,155 @@
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
         </div>
-
-        <div class="header__search">
-            <input type="text" placeholder="Search by keyword">
-            <button type="button">
-              <img src="images/search-icon.png" alt="Search Icon">
-            </button>
-        </div>
     </header>
 
     <main class="main">
+
+        <!-- Search bar -->
+        <div class="search_container">
+            <input type="text" placeholder="Search by keyword" class="search-box">
+            <button type="button" class="search-button">
+              <img src="images/filter.png" alt="Search Icon" class="search-icon">
+              <ul id="filter-options">
+                <li data-filter="distance">By Distance</li>
+                <li data-filter="rating">By Rating</li>
+              </ul>
+            </button>
+        </div>
+
+         <!-- Categories bar -->
         <section class="category">
-          <h2>Food Categories</h2>
-          <ul class="category__list">
-            <li><a href="#">Asian</a></li>
-            <li><a href="#">Fast Food</a></li>
-            <li><a href="#">Cafes</a></li>
-            <li><a href="#">Milk Tea</a></li>
-            <li><a href="#">Mexican</a></li>
-            <li><a href="#">Barbecue</a></li>
-            <li><a href="#">Dessert</a></li>
-            <li><a href="#">Healthy</a></li>
-          </ul>
+          <h2 id="category-title">Food Categories</h2>
+
+          <div class="category_container">
+
+            <div class="category_item">
+              <img src="images/category/asian.png" alt="Asian Image" class="category_img">
+              <p class="category_text"><a href="#">Asian</a></p>
+            </div>
+
+            <div class="category_item">
+              <img src="images/category/fastfood.png" alt="Fast Food Image" class="category_img">
+              <p class="category_text"><a href="#">Fast Food</a></p>
+            </div>
+
+            <div class="category_item">
+              <img src="images/category/mexico.png" alt="Mexican Image" class="category_img">
+              <p class="category_text"><a href="#">Mexican</a></p>
+            </div>
+
+            <div class="category_item">
+              <img src="images/category/bbq.png" alt="BBQ Image" class="category_img">
+              <p class="category_text"><a href="#">Barbecue</a></p>
+            </div>
+
+            <div class="category_item">
+              <img src="images/category/healthy.png" alt="Healthy Food Image" class="category_img">
+              <p class="category_text"><a href="#">Healthy</a></p>
+            </div>
+
+            <div class="category_item">
+              <img src="images/category/coffee.png" alt="Coffee Image" class="category_img">
+              <p class="category_text"><a href="#">Cafes</a></p>
+            </div>
+
+            <div class="category_item">
+              <img src="images/category/milktea.png" alt="Milk Tea Image" class="category_img">
+              <p class="category_text"><a href="#">Milk Tea</a></p>
+            </div>
+
+            <div class="category_item">
+              <img src="images/category/dessert.png" alt="Dessert Image" class="category_img">
+              <p class="category_text"><a href="#">Dessert</a></p>
+            </div>
+
+          </div>
         </section>
-        <div class="restaurant">
-            <span>McDonalds</span>
-            <span class="rating">4.5 stars</span>
-            <span class="distance">1km</span>
+
+        <hr>
+        <h2 id="category-title">Restaurants</h2>
+
+        <div class="restaurant-container">
+          <div class="restaurant">
+              <img src="images/restaurants/macca.jpeg" alt="McDonalds" class="restaurant-img">
+              <p class="restaurant-name">McDonalds</p>
+              <span class="rating">4.5 stars</span>
+              <span class="distance">1km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/kurtosh.png" alt="Kurtosh" class="restaurant-img">
+              <p class="restaurant-name">Kurtosh</p>
+              <span class="rating">2 stars</span>
+              <span class="distance">2km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/moonsushi.png" alt="Moon Sushi" class="restaurant-img">
+              <p class="restaurant-name">Moon Sushi</p>
+              <span class="rating">5 stars</span>
+              <span class="distance">2km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/nem.png" alt="Nem Kitchen" class="restaurant-img">
+              <p class="restaurant-name">Nem Kitchen</p>
+              <span class="rating">4.0 stars</span>
+              <span class="distance">3km</span>
+          </div>
         </div>
-        <div class="restaurant">
-            <span>Kurtosh</span>
-            <span class="rating">2 stars</span>
-            <span class="distance">2km</span>
+
+        <div class="restaurant-container">
+          <div class="restaurant">
+              <img src="images/restaurants/milan.jpeg" alt="Mylan" class="restaurant-img">
+              <p class="restaurant-name">Mylan</p>
+              <span class="rating">4 stars</span>
+              <span class="distance">2.1km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/yayoi.jpeg" alt="Yayoi" class="restaurant-img">
+              <p class="restaurant-name">Yayoi Kitchen</p>
+              <span class="rating">5 stars</span>
+              <span class="distance">1.5km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/hansang.jpeg" alt="Hansang" class="restaurant-img">
+              <p class="restaurant-name">HanSang Restaurant</p>
+              <span class="rating">4.5 stars</span>
+              <span class="distance">1.2km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/kfc.avif" alt="KFC" class="restaurant-img">
+              <p class="restaurant-name">KFC</p>
+              <span class="rating">4.8 stars</span>
+              <span class="distance">2km</span>
+          </div>
         </div>
-        <div class="restaurant">
-            <span>Moon Sushi</span>
-            <span class="rating">5 stars</span>
-            <span class="distance">2km</span>
+
+        <div class="restaurant-container" style="padding-bottom: 100px;">
+          <div class="restaurant">
+              <img src="images/restaurants/jasmine.jpeg" alt="Jasmine Rice" class="restaurant-img">
+              <p class="restaurant-name">Jasmine Rice</p>
+              <span class="rating">5 stars</span>
+              <span class="distance">2km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/toro.jpeg" alt="Toro" class="restaurant-img">
+              <p class="restaurant-name">Toro restaurant</p>
+              <span class="rating">3 stars</span>
+              <span class="distance">1km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/red.png" alt="Red Rooster" class="restaurant-img">
+              <p class="restaurant-name">Red Rooster</p>
+              <span class="rating">2 stars</span>
+              <span class="distance">0.5km</span>
+          </div>
+          <div class="restaurant">
+              <img src="images/restaurants/guzman.jpeg" alt="Guzman Y Gomez" class="restaurant-img">
+              <p class="restaurant-name">Guzman Y Gomez</p>
+              <span class="rating">5 stars</span>
+              <span class="distance">4km</span>
+          </div>
         </div>
-        <div class="restaurant">
-            <span>Nem Kitchen</span>
-            <span class="rating">4.0 stars</span>
-            <span class="distance">3km</span>
-        </div>
-        <div class="restaurant">
-            <span>An Viet Group</span>
-            <span class="rating">4 stars</span>
-            <span class="distance">2.1km</span>
-        </div>
-        <div class="restaurant">
-            <span>Yayoi Kitchen</span>
-            <span class="rating">5 stars</span>
-            <span class="distance">1.5km</span>
-        </div>
-        <div class="restaurant">
-            <span>HanSang Store</span>
-            <span class="rating">4.5 stars</span>
-            <span class="distance">1.2km</span>
-        </div>
-        <div class="restaurant">
-            <span>BBQ Town</span>
-            <span class="rating">4.8 stars</span>
-            <span class="distance">2km</span>
-        </div>
-        <div class="restaurant">
-            <span>Jasmine Rice</span>
-            <span class="rating">5 stars</span>
-            <span class="distance">2km</span>
-        </div>
-        <div class="restaurant">
-            <span>Toro restaurant</span>
-            <span class="rating">3 stars</span>
-            <span class="distance">1km</span>
-        </div>
-        <div class="restaurant">
-            <span>Spicy World</span>
-            <span class="rating">2 stars</span>
-            <span class="distance">0.5km</span>
-        </div>
-        <div class="restaurant">
-            <span>Hanok Kitchen</span>
-            <span class="rating">5 stars</span>
-            <span class="distance">4km</span>
-        </div>
+
     </main>
 
     <script src="script.js"></script>

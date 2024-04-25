@@ -97,28 +97,29 @@ a {
 }
 
 .search_address_input {
-    width: 350px; 
-    height: 60px; 
+    width: 400px; 
+    height: 70px; 
     background-image: url("images/v54_31.png");
     background-repeat: no-repeat; 
-    background-position: 10px 12px;  
+    background-position: 15px 16px;  
     background-color: #FFFFFF;
     background-size: 10% 50%;
     border-radius: 10px;
     text-size-adjust: 30px;
     text-align: center;
     outline: none;
-    font-size: 13px;
+    font-size: 17px;
 }
 
 .continue_button {
     background-color: #E01A1A;
     border-radius: 20px;
-    width: 150px;
-    height: 40px;
+    width: 180px;
+    height: 50px;
     color: #FFFFFF;
     outline: none;
-    font-size: 15px;
+    font-size: 18px;
+    border: none;
 }
 
 /* ------------------------------------------------------- */
@@ -147,6 +148,7 @@ a {
     display: inline-block;  /* Display images inline */
     margin-right: 30px;
     margin-left: 30px;
+    box-shadow: 2px 2px 2px gainsboro;
 }
 
 .subscription_container {
@@ -184,12 +186,12 @@ a {
 .subscribe_button {
     background-color: #E01A1A;
     border-radius: 20px;
-    width: 200px;
+    width: 220px;
     height: 50px;
     color: #FFFFFF;
     outline: none;
     font-size: 20px;
-
+    border: none;
 }
 
 /* ------------------------------------------------------- */
@@ -197,11 +199,12 @@ a {
 /* ABOUT US */
 
 .about_container {
-    background-color: #FFE140;
+    background-color: darkgoldenrod;
     display: flex;
     justify-content: center;
     padding-top: 100px;
     padding-bottom:100px;
+    
 }
 
 .about_box {
@@ -213,6 +216,7 @@ a {
     padding-left: 50px;
     padding-right: 50px;
     border-radius: 50px;
+    box-shadow: 5px 5px 5px black;
 }
 
 
