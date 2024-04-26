@@ -92,3 +92,64 @@ body {
     background-color: #ccc;
     z-index: 1;
 }
+
+
+/* NAVIGATION BAR */
+
+header {
+    background-color: #1F1F1F;
+}
+
+.logo_name {
+    color: #E5B53A;
+    
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.logoname2 {
+    color: #E5B53A;
+    display: inline;
+    font-size: 60px;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.logo_description {
+    color: #FFFFFF;
+    size: 30px;
+    padding-left: 100px;
+    float: left;
+}
+
+
+.navigation_bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    overflow: hidden;
+    float: right;
+}
+
+.nav_list {
+    size: 25px;
+    display: inline;
+    float: right;
+    padding: 8px;
+    padding-right: 25px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;  
+}
+
+/* ------------------------------------------------------- */
