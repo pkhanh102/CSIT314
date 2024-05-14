@@ -16,11 +16,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7' # or the version of Ruby you need
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Build project
+        run: bundle exec jekyll build
+
+      - name: Run tests
+        run: |
+          # Run HTML and CSS validation tests
+          npm install -g htmlhint stylelint
+          htmlhint **/*.html
+          stylelint "**/*.css"
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend/ # or the directory containing your HTML/CSS files
+          publish_dir: ./_site # Jekyll output directory
 
   check_code:
     if: github.event_name == 'schedule'  # Only run code check on schedule events
@@ -30,16 +48,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Validate HTML
+      - name: Run tests
         run: |
-          # Use an HTML validator tool or linter
-          # Example using htmlhint (requires Node.js setup)
-          npm install -g htmlhint
+          # Run HTML and CSS validation tests
+          npm install -g htmlhint stylelint
           htmlhint **/*.html
-
-      - name: Validate CSS
-        run: |
-          # Use a CSS validator tool or linter
-          # Example using stylelint (requires Node.js setup)
-          npm install -g stylelint
           stylelint "**/*.css"
