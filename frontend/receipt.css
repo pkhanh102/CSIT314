@@ -155,14 +155,11 @@ a {
     font-weight: bold;
     font-size: 20px;
 }
-button{
+button {
     width: 170px;
     height: 70px;
     border-radius: 20px;
     background-color: red;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
 }
 .container {
     height: 200px;
