@@ -1,12 +1,15 @@
-name: Deploy Static Site to GitHub Pages
+name: Deploy Static Site to GitHub Pages and Daily Code Check
 
 on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 0 * * *'  # Runs at midnight (UTC) every day
 
 jobs:
   deploy:
+    if: github.event_name == 'push'  # Only run deploy on push events
     runs-on: ubuntu-latest
 
     steps:
@@ -18,3 +21,25 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./frontend/ # or the directory containing your HTML/CSS files
+
+  check_code:
+    if: github.event_name == 'schedule'  # Only run code check on schedule events
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Validate HTML
+        run: |
+          # Use an HTML validator tool or linter
+          # Example using htmlhint (requires Node.js setup)
+          npm install -g htmlhint
+          htmlhint **/*.html
+
+      - name: Validate CSS
+        run: |
+          # Use a CSS validator tool or linter
+          # Example using stylelint (requires Node.js setup)
+          npm install -g stylelint
+          stylelint "**/*.css"
