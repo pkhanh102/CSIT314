@@ -162,7 +162,7 @@ a {
     display: inline;
 }
 
-#category-title {
+.category-title {
     color: #FFFFFF;
     font-size: 30px;
     margin-left: 11%;
