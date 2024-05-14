@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="">Login</a></li>
+                <li class="nav_list"><a href="">About Us</a></li>
+                <li class="nav_list"><a href="">Food Categories</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Cart Checkout -->
+        <div class="cart_container">
+            
+            <!-- Cart Title -->
+            <h1 class="cart_title">Shopping Cart</h1>
+
+            <!-- Cart Description -->
+            <div class="cart_description">
+                <p ">Your orders from McDonalds</p>
+            </div>
+
+            <!-- Cart Box -->
+            <div class="cart_box">
+                <!-- Items -->
+
+                <!-- Item 1 -->
+                <div class="cart_items">
+                    <!-- Img product button -->
+                    <img class="img_items" src="images/img/Screen Shot 2024-04-24 at 23.02.03.png" alt="Food1">
+                    
+                    <!-- product detail -->
+                    <div style="display: grid; margin: 10px;">
+                        <div class="item_name">Single Cheese Burger</div>
+                        <div class="item_description">Onion, cheese,...</div>
+                    </div>
+                    
+                    <!-- Adjust button -->
+                    <div class="adjust_btn">
+                        <button class="quantity-btn" id="decrease">-</button>
+                            <input style="width: 30px;" type="number" id="quantity" value="1" min="1">
+                        <button class="quantity-btn" id="increase">+</button>
+                    </div>
+                    <button class="delete-btn" id="increase">Remove</button>
+
+                    <div class="item_price">$8.99</div>
+                </div>
+                <div style="margin-left: 13%;">____________________________________________________________</div>
+
+            <!-- Item 2 -->
+                <div class="cart_items">
+                    <!-- Img product button -->
+                    <img class="img_items" src="images/img/Screen Shot 2024-04-24 at 23.02.13.png" alt="Food1">
+                    
+                    <!-- product detail -->
+                    <div style="display: grid; margin: 10px;">
+                        <div class="item_name">Single Cheese Burger</div>
+                        <div class="item_description">Onion, cheese,...</div>
+                    </div>
+                    
+                    <!-- Adjust button -->
+                    <div class="adjust_btn">
+                        <button class="quantity-btn" id="decrease">-</button>
+                            <input style="width: 30px;" type="number" id="quantity" value="1" min="1">
+                        <button class="quantity-btn" id="increase">+</button>
+                    </div>
+                    <button class="delete-btn" id="increase">Remove</button>
+
+                    <div class="item_price">$8.99</div>
+                </div>
+                <div style="margin-left: 13%;">____________________________________________________________</div>
+
+            <!-- Item 3 -->
+                <div class="cart_items">
+                    <!-- Img product button -->
+                    <img class="img_items" src="images/img/Screen Shot 2024-04-24 at 23.02.25.png" alt="Food1">
+                    
+                    <!-- product detail -->
+                    <div style="display: grid; margin: 10px;">
+                        <div class="item_name">Single Cheese Burger</div>
+                        <div class="item_description">Onion, cheese,...</div>
+                    </div>
+                    
+                    <!-- Adjust button -->
+                    <div class="adjust_btn">
+                        <button class="quantity-btn" id="decrease">-</button>
+                            <input style="width: 30px;" type="number" id="quantity" value="1" min="1">
+                        <button class="quantity-btn" id="increase">+</button>
+                    </div>
+                    <button class="delete-btn" id="increase">Remove</button>
+
+                    <div class="item_price">$8.99</div>
+                </div>
+                <div style="margin-left: 13%;">____________________________________________________________</div>
+
+            <!-- Item 3 -->
+                <div class="cart_items">
+                    <!-- Img product button -->
+                    <img class="img_items" src="images/img/Screen Shot 2024-04-24 at 23.02.03.png" alt="Food1">
+                    
+                    <!-- product detail -->
+                    <div style="display: grid; margin: 10px;">
+                        <div class="item_name">Single Cheese Burger</div>
+                        <div class="item_description">Onion, cheese,...</div>
+                    </div>
+                    
+                    <!-- Adjust button -->
+                    <div class="adjust_btn">
+                        <button class="quantity-btn" id="decrease">-</button>
+                            <input style="width: 30px;" type="number" id="quantity" value="1" min="1">
+                        <button class="quantity-btn" id="increase">+</button>
+                    </div>
+                    <button class="delete-btn" id="increase">Remove</button>
+
+                    <div class="item_price">$8.99</div>
+                </div>
+                <div style="margin-left: 13%;">____________________________________________________________</div>
+                <div class="total_items">
+                    <div class="total_text">Delivery Fee:</div>
+                    <div class="total_price">$19</div>
+                </div>
+                <div class="total_items">
+                    <div class="total_text">Service Fee :</div>
+                    <div class="total_price">$3.8</div>
+                </div>
+                <div style="margin-left: 13%;">____________________________________________________________</div>
+                <div class="total_items">
+                    <div class="total_text">Total:</div>
+                    <div class="total_price_a">$22.8</div>
+                </div>
+            </div>
+
+            <!-- Cart Button -->
+            <button class="cart_button">Checkout Now</button>
+            
+        </div>
+
+
+    </main>
+
+    <footer>
+        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+
+    <script>
+        const decreaseBtn = document.getElementById('decrease');
+        const increaseBtn = document.getElementById('increase');
+        const quantityInput = document.getElementById('quantity');
+    
+        decreaseBtn.addEventListener('click', function() {
+            decreaseQuantity();
+        });
+    
+        increaseBtn.addEventListener('click', function() {
+            increaseQuantity();
+        });
+    
+        function decreaseQuantity() {
+            let currentQuantity = parseInt(quantityInput.value);
+            if (currentQuantity > 1) {
+            currentQuantity--;
+            quantityInput.value = currentQuantity;
+            }
+        }
+    
+        function increaseQuantity() {
+            let currentQuantity = parseInt(quantityInput.value);
+            currentQuantity++;
+            quantityInput.value = currentQuantity;
+        }
+      </script>
+</body>
+
+</html>

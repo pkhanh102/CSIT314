@@ -1,0 +1,155 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    color: white;
+    padding: 14px 20px;
+}
+.navbar a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+}
+.order-status {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.status-header {
+    display: flex;
+    align-items: center; /* Aligns the text vertically center */
+    gap: 10px; /* adds some space between the tick icon and the text */
+    color: #4CAF50;
+    font-size: 24px;
+    margin-bottom: 100px;
+}
+.tracker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 100px 0;
+}
+.order-status p {
+    margin-top: 100px; 
+}
+.tracker .step {
+    flex: 1;
+    text-align: center;
+}
+.tracker .step .icon {
+    display: block;
+    margin: auto;
+    width: 70px;
+    height: 70px;
+    background-color: #ddd;
+    border-radius: 50%;
+    position: relative; 
+    overflow: hidden;
+}
+.tracker .step .icon img {
+    width: 60%;  
+    height: 60%; 
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+.tracker .active .icon {
+    background-color: #88C56C;
+}
+.tracker .pending .icon{
+    background-color: #F05353;
+}
+.tracker .ongoing .icon{
+    background-color: #FFFA7C;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #4C5050;
+}
+.horizontalLine {
+    position: relative;
+    top: -10px; 
+    height: 2px;
+    width: calc(100% / 4); /* There are 4 steps, so we divide by 4 */
+    background-color: #ccc;
+    z-index: 1;
+}
+
+
+/* NAVIGATION BAR */
+
+header {
+    background-color: #1F1F1F;
+}
+
+.logo_name {
+    color: #E5B53A;
+    
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.logoname2 {
+    color: #E5B53A;
+    display: inline;
+    font-size: 60px;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.logo_description {
+    color: #FFFFFF;
+    size: 30px;
+    padding-left: 100px;
+    float: left;
+}
+
+
+.navigation_bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    overflow: hidden;
+    float: right;
+}
+
+.nav_list {
+    size: 25px;
+    display: inline;
+    float: right;
+    padding: 8px;
+    padding-right: 25px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;  
+}
+
+/* ------------------------------------------------------- */

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="">Login</a></li>
+                <li class="nav_list"><a href="">About Us</a></li>
+                <li class="nav_list"><a href="">Food Categories</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Payment -->
+        <div class="cart_container">
+
+            <!-- Personal Box -->
+            <div class="payment_box_a">
+                <div class="info" style="font-size: larger;">1. Personal Info</div>
+                    <div class="input_items">
+                        <div class="input_lines">
+                            <div>First Name</div>
+                            <input style="margin-left: 4rem; padding: 10px;  padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your first name" required autofocus>
+                        </div>
+
+                        <div class="input_lines">
+                            <div>Last Name</div>
+                            <input style="margin-left: 4rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your last name" required autofocus>
+                        </div>
+
+                        <div class="input_lines">
+                            <div>Email</div>
+                            <input style="margin-left: 6.35rem; padding: 10px;  padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your email address" required autofocus>
+                        </div>
+
+                        <div class="input_lines">
+                            <div>Phone number</div>
+                            <input style="margin-left: 2.25rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your phone number" required autofocus>
+                        </div>
+
+                    </div>
+            </div>
+
+            
+            <div class="map_display">
+                <div class="payment_box_d">
+                    <div class="info" style="font-size: larger;">2. Shipping Details</div>
+                        <div class="input_items">
+                            <div style="margin-left: 10%;">
+                                <p>Deliver Address</p>
+                            </div>
+                            <div class="input_lines">
+                                <img class="img_pay" src="images/img/Screen Shot 2024-04-25 at 00.55.42.png" alt="Food1" style="margin-right: 10px;">
+                                <input style="margin-left: 0rem;width: 70%;margin-top: 0.1rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your address" required autofocus>
+                            </div>
+                            <input style="margin-left: 6.5rem;width: 60%;margin-top: 0.5rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your postcode" required autofocus>
+                            
+                            <div style="margin-left: 10%;margin-top: 0.5rem;">Delivery Time</div>
+                            <div style="padding-top: 10px; " class="input_lines">
+                                <div class="payment_box_c">
+                                    <div class="input_lines_b">
+                                        <div style="padding-top: 10px;">Standard <br/> 15-20 mins <br/></div>
+                                    </div>
+                                </div>
+                                <div style="margin-left: 2rem;" class="payment_box_c">
+                                    <div class="input_lines_b">
+                                        <div>Express <br/> 5-10 mins <br/> +$2.99</div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                </div>
+                
+                <img class="payment_map" src="images/img/Screen Shot 2024-04-25 at 00.56.19.png" alt="Map">
+                
+
+            </div>
+            
+
+            <div class="payment_box_b">
+                <div class="info" style="font-size: larger;">3. Payment Method</div>
+                    <div class="input_lines">
+                        <img class="img_pay_a" src="images/img/Screen Shot 2024-04-25 at 01.18.10.png" alt="Food1">
+                        <div style="margin-left: 1rem;font-weight: bold;">Credit Card/ Debit Card</div>
+                    </div>
+
+
+
+                    <div class="input_items">
+                        <div style="margin-left: 10%;">Card Number</div>
+                        <div class="input_lines">
+                            <input style="width: 40%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="" required autofocus>
+                            <div style="margin-left: 1rem;">CVV</div>
+                            <input style="margin-left: 1rem;width: 10%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="" required autofocus>
+                        </div>
+
+                        <div style="margin-left: 10%;margin-top: 1rem;">Expiration</div>
+                        <input style="margin-left: 4rem;width: 40%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="MM/YY" required autofocus>
+                    </div>
+            </div>
+
+            <div style="height: 5rem;" class="payment_box_b">
+                <div style="padding-top: 0rem;" class="input_lines">
+                    <div class="info" style="font-size: larger;">Total</div>
+                    <div style="margin-left: 63%;" class="info">$187.3</div>
+                </div>  
+            </div>
+
+
+            <!-- Pay Button -->
+            <div style="display: flex; align-items: center; margin: auto;">
+                <button class="pay_button">Cancel</button>
+                <button class="pay_button">Confirm</button>
+            </div>
+            
+        </div>
+
+
+    </main>
+
+    <footer>
+        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+
+    <script>
+        
+    </script>
+</body>
+
+</html>
+
+
+
