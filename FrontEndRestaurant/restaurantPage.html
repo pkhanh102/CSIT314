@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="restaurantPage.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="">Login</a></li>
+                <li class="nav_list"><a href="">About Us</a></li>
+                <li class="nav_list"><a href="">Food Categories</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- SHOPPING CART-->
+        <div class="cart_container">
+            <form action="enter-page.html" method="post">  <!-- Enter next page here -->
+                <button type="submit">
+                    <input class="cart_logo" type="image" src="images/cart.png" alt="Shopping Cart">
+                </button>
+            </form>
+        </div>
+
+        <!-- RESTAURANT LOGO, COVER & INFO-->
+        <div class="restaurant_logo">
+            <div class="restaurant_cover">
+                <img class="logo_cover" src="images/macca-cover.jpeg" alt="Restaurant Cover">
+            </div>
+
+            <div class="restaurant_avatar">
+                <img class="logo_avatar" src="images/macca-logo.png" alt="Restaurant Cover">
+            </div>
+
+            <div class="restaurant_info">
+                <div class="header_with_button">
+                    <p class="restaurant_name">McDonald's</p>
+                    <button style = "margin-bottom: 20px;" class="add_button_header">
+                        <img src="images/change.png" alt="">
+                    </button>
+                </div>
+                
+                
+
+                <div class="text_img">
+                    <img class="star_img" src="images/star.png" alt="Star Image">
+                    <p class="star_text">4.5/5 (999+)</p>
+                </div>
+
+                <div class="restaurant_address">
+                    <div class="text_img">
+                        <img class="info_img" src="images/location-img.png" alt="Location Image">
+                        <p class="info_text">1 Prince Highway<br>North Wollongong, 2500, NSW</p>
+                    </div>
+
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/clock.png" alt="Clock Image">
+                        <p class="info_text" style="color: green;">Open to 10PM</p>
+                    </div>
+
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/phone-call.png" alt="Phone Image">
+                        <p class="info_text">0415 124 888</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- BEST SELLER -->
+        <div class="best_seller_container">
+            <div class="header_with_button">
+                <h2 class="best_header">Best Seller</h2>
+                <button style = "margin-bottom: 20px;" class="add_button_header">
+                    <img src="images/change.png" alt="">
+                </button>
+            </div>
+            
+
+            <div class="best_items_container">
+                <div class="best_img" style="margin-left: 200px;">
+                    <img class="best_item_img" src="images/macca-items/bigmac-combo.png" alt="BigMac Combo Image">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">BigMac Combo<br>$15</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/cheeseburger-combo.png" alt="Cheeseburger Combo Image">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Cheeseburger<br>$5</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/nugget.png" alt="Chicken Nugget Image">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">McNugget<br>$8</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/mcflurry.png" alt="McFlurry Image">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">McFlurry<br>$3</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/mcchicken.png" alt="McChicken Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">McChicken<br>$6</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/icedlatte.png" alt="Iced Latte Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Iced Latte<br>$4</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- FULL MENU -->
+        <div class="menu_container">
+            <div class="header_with_button">
+                <h2 class="best_header">Full menu</h2>
+                <button style = "margin-bottom: 20px;" class="add_button_header">
+                    <img src="images/change.png" alt="">
+                </button>
+            </div>
+
+
+            <div class="menu_items_container">
+                <div class="best_img" style="margin-left: 200px;">
+                    <img class="best_item_img" src="images/macca-items/bigmac-combo.png" alt="BigMac Combo Image">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">BigMac Combo<br>$15</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/cheeseburger-combo.png" alt="Cheeseburger Combo Image">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Cheeseburger<br>$5</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/double-cheese.png" alt="Double Cheeseburger Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Double Chees...<br>$7</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/mcspicy.png" alt="McSPicy Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">McSPicy<br>$9</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/mcchicken.png" alt="McChicken Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">McChicken<br>$6</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/filletofish.png" alt="Fillet O Fish Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Fillet O Fish<br>$6</p>
+                </div>
+            </div>
+
+
+            <div class="menu_items_container">
+                <div class="best_img" style="margin-left: 200px;">
+                    <img class="best_item_img" src="images/macca-items/chips.png" alt="Chips Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Chips<br>$4</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/hashbrown.png" alt="Hashbrown Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Hashbrown<br>$3</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/nugget.png" alt="Chicken Nugget Image">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">McNugget<br>$8</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/mcflurry.png" alt="McFlurry Image">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">McFlurry<br>$3</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/salad.png" alt="Salad Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Salad<br>$3</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/applepie.png" alt="Apple Pie Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Apple Pie<br>$4</p>
+                </div>
+            </div>
+
+
+            <div class="menu_items_container">
+                <div class="best_img" style="margin-left: 200px;">
+                    <img class="best_item_img" src="images/macca-items/coke.png" alt="Coke Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Coke Combo<br>$2</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/coke-zero.png" alt="Coke Zero Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Coke Zero<br>$2</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/cappuchino.png" alt="Cappuccino Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Cappuccino<br>$4</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/hot-choco.png" alt="Hot Chocolate Image" style="background-color: white;"">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Hot Chocolate<br>$4</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/iced-choco.png" alt="Iced Chocolate Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Iced Chocolate<br>$4</p>
+                </div>
+
+                <div class="best_img">
+                    <img class="best_item_img" src="images/macca-items/icedlatte.png" alt="Iced Latte Image" style="background-color: white;">
+                    <button class="add_button">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text">Iced Latte<br>$4</p>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
+    <footer>
+        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

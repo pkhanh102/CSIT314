@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information</title>
+    <link rel="stylesheet" href="itemAdjust.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <!-- NAVIGATION BAR -->
+            <h1 class="logo_name">ROCKETMEAL</h1>
+            <div>
+                <p class="logo_description">30 minutes</p>
+                <ul class="navigation_bar">
+                    <li class="nav_list"><a href="">Login</a></li>
+                    <li class="nav_list"><a href="">About Us</a></li>
+                    <li class="nav_list"><a href="">Food Categories</a></li>
+                    <li class="nav_list"><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <main>
+            <div class="box">
+                <p style="color: #000; font-size: 30px; font-weight: bold; text-align:center;">Restaurant Info</p>
+                <form>
+                    <div class="input">
+                        <label style="font-weight: bold; padding-right: 90px;">Restaurant name</label>
+                        <input type="text" id="name">
+                    </div>
+                    <div class="input">
+                        <label style="font-weight: bold; padding-right: 80px;">Address</label>
+                        <input style="margin-left: 76px;" type="text" id="address">
+                    </div>
+                    <div class="input">
+                        <label style="font-weight: bold; padding-right: 130px;">Open time</label>
+                        <input style="margin-left: 12px;" type="number" id="openTime">
+                    </div>
+                    <div class="input">
+                        <label style="font-weight: bold; padding-right: 130px;">Phone number</label>
+                        <input style="margin-left: -20px;" type="text" id="phoneNumber">
+                    </div>
+                    <div class="input">
+                        <label style="font-weight: bold; padding-right: 70px;">Upload Image</label>
+                        <input style="margin-left: 47px;" type="file" id="imageUpload" accept="image/*">
+                    </div>
+                    <div class="image-preview" id="imagePreview">
+                        <img src="" alt="Image Preview" class="imageDisplay" style="display:none;">
+                        <span class="defaultText">Image Preview</span>
+                    </div>
+                </form>
+            </div>
+            <div class="button-container">
+                <button class="custom-button" type="submit">Cancel</button>
+                <button class="custom-button" type="submit">Done</button>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+    <script src="imagePreview.js"></script>
+</body>
+
+</html>
