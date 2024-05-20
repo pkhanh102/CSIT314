@@ -28,19 +28,28 @@
             <p style="text-align: center; color: #000; font-size: 30px; font-weight: bold;">Sign up a new account</p>
             <form id="login-form">
                 <div class="email_input">
-                    <label style="font-weight: bold; padding-right: 90px;" for="email">Email</label>
+                    <label style="font-weight: bold; padding-right: 100px;" for="email">Email</label>
                     <input type="text" id="email" name="email" required>
+                </div>
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 90px;" for="fname">Fname</label>
+                    <input type="text" id="fname" name="fname" required>
+                </div>
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 93px;" for="lname">Lname</label>
+                    <input type="text" id="lname" name="lname" required>
+                </div>
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 97px;" for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" required>
                 </div>
 
                 <div class="password_input">
-                    <label style="font-weight: bold;" for="password">Password</label>
+                    <label style="font-weight: bold;padding-right: 71px" for="password">Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <div class="password_input">
-                    <label style="font-weight: bold;" for="password"> Confirm </label>
-                    <input style="margin-left: 1.0rem;" type="password" id="password" name="password" required>
-                </div>
-                <button type="submit">Sign up</button>
+                
+                <button style="margin-top: 16rem;" type="submit">Sign up</button>
             </form>
         </div>
         <div style="padding-left:12rem;margin: 100px auto;max-width: 600px;color: aliceblue;">
@@ -54,47 +63,52 @@
     </footer>
 
     <script>
-        document.getElementById('signup-form').addEventListener('submit', async function(event) {
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
             event.preventDefault();
-
+    
             const email = document.getElementById('email').value;
+            const firstName = document.getElementById('fname').value;
+            const lastName = document.getElementById('lname').value;
+            const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
             const messageElement = document.getElementById('message');
-
-            // Check if passwords match
-            if (password !== confirmPassword) {
-                messageElement.textContent = 'Passwords do not match';
-                return;
-            }
-
+    
             const customerSignUpDto = {
                 email: email,
+                firstName: firstName,
+                lastName: lastName,
+                phoneNumber: phone,
                 password: password
             };
-
-            try {
-                const response = await fetch('http://localhost:8081/customers/signup', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(customerSignUpDto)
-                });
-
-                if (response.status === 409) {
-                    messageElement.textContent = 'Email already registered';
-                } else if (response.status === 202) {
-                    messageElement.textContent = 'Customer account registered';
-                    messageElement.style.color = 'green';
-                } else {
-                    messageElement.textContent = 'An unexpected error occurred';
+    
+            fetch('http://localhost:8081/customers/signup', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(customerSignUpDto)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            } catch (error) {
-                messageElement.textContent = 'An error occurred: ' + error.message;
-            }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === "Customer account registered") {
+                    alert(data.message);
+                    window.location.href = 'login.html'; // Redirect to login page
+                } else {
+                    messageElement.textContent = data.message; // Show error message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
         });
     </script>
+    
 </body>
 
 </html>
