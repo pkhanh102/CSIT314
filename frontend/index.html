@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RocketMeal</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <header>
         <!-- NAVIGATION BAR -->
@@ -15,9 +13,9 @@
         <div>
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
-                <li class="nav_list"><a href="login.html">Login</a></li>
-                <li class="nav_list"><a href="">About Us</a></li>
-                <li class="nav_list"><a href="">Food Categories</a></li>
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
+                <li class="nav_list"><a href="#">About Us</a></li>
+                <li class="nav_list"><a href="#">Food Categories</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
         </div>
@@ -73,7 +71,6 @@
                     With our intuitive interface, customers can effortlessly navigate through an extensive array of dining options using our category function. Whether you're craving cozy cafes, vibrant clubs, or exotic Asian cuisine, we've got you covered. But that's not all - our advanced search capabilities enable users to refine their quest by keywords, distance, and ratings, ensuring they discover their perfect dining destination with ease.</p>
             </div>
         </div>
-
     </main>
 
     <footer>
@@ -81,7 +78,21 @@
         <p>&copy; 2024 ROCKETMEAL</p>
     </footer>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+        // Check login state and update navigation bar
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
 
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
+</body>
 </html>

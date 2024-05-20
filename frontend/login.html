@@ -52,7 +52,7 @@
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
+    
             fetch('http://localhost:8081/customers/login', {
                 method: 'POST',
                 headers: {
@@ -60,11 +60,17 @@
                 },
                 body: JSON.stringify({ email, password })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.message === "Customer logged in") {
                     alert(data.message);
-                    window.location.href = 'index.html'; // Redirect to restaurant page
+                    localStorage.setItem('isLoggedIn', 'true'); // Store login state
+                    window.location.href = 'index.html'; // Redirect to index page
                 } else {
                     alert(data.message); // Show error message
                 }
