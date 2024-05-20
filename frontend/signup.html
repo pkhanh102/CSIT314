@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a href="">About Us</a></li>
+                <li class="nav_list"><a href="">Food Categories</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+		<div class="box">
+            <p style="text-align: center; color: #000; font-size: 30px; font-weight: bold;">Sign up a new account</p>
+            <form id="login-form">
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 90px;" for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+
+                <div class="password_input">
+                    <label style="font-weight: bold;" for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="password_input">
+                    <label style="font-weight: bold;" for="password"> Confirm </label>
+                    <input style="margin-left: 1.0rem;" type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Sign up</button>
+            </form>
+        </div>
+        <div style="padding-left:12rem;margin: 100px auto;max-width: 600px;color: aliceblue;">
+            <a href="login.html" style="color: aliceblue;">Click here to back to login page</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const messageElement = document.getElementById('message');
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                messageElement.textContent = 'Passwords do not match';
+                return;
+            }
+
+            const customerSignUpDto = {
+                email: email,
+                password: password
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/signup', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(customerSignUpDto)
+                });
+
+                if (response.status === 409) {
+                    messageElement.textContent = 'Email already registered';
+                } else if (response.status === 202) {
+                    messageElement.textContent = 'Customer account registered';
+                    messageElement.style.color = 'green';
+                } else {
+                    messageElement.textContent = 'An unexpected error occurred';
+                }
+            } catch (error) {
+                messageElement.textContent = 'An error occurred: ' + error.message;
+            }
+        });
+    </script>
+</body>
+
+</html>
