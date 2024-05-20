@@ -14,7 +14,7 @@
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
                 <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
-                <li class="nav_list"><a href="#">About Us</a></li>
+                <li class="nav_list"><a href="#about-us">About Us</a></li>
                 <li class="nav_list"><a href="#">Food Categories</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
@@ -64,7 +64,7 @@
         </div>
 
         <!-- ABOUT US -->
-        <div class="about_container">
+        <div id="about-us" class="about_container">
             <div class="about_box">
                 <h1 class="about_title">About Us</h1>
                 <p class="about_text">Welcome to our innovative platform revolutionizing the way you experience dining! At ROCKETMEAL, we've curated a seamless and convenient solution for food enthusiasts to explore, order, and enjoy delicious meals from a plethora of nearby restaurants.
@@ -92,6 +92,15 @@
                     window.location.href = 'index.html';
                 });
             }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>
