@@ -75,10 +75,10 @@
     
             const customerSignUpDto = {
                 email: email,
+                password: password,
                 firstName: firstName,
                 lastName: lastName,
-                phoneNumber: phone,
-                password: password
+                phoneNumber: phone
             };
     
             fetch('http://localhost:8081/customers/signup', {
