@@ -32,10 +32,10 @@
                 <p style="size: 40px;">We pick the best restaurant near you!</p>
             </div>
             <div class="search_address">
-                <input type="text" class="search_address_input" placeholder="Enter your postcode here" required>
+                <input type="text" id="postcode-input" class="search_address_input" placeholder="Enter your postcode here" required>
             </div>
             <div class="search_address">
-                <button class="continue_button">Continue</button>
+                <button id="search-button" class="continue_button">Continue</button>
             </div>
         </div>
 
@@ -94,6 +94,7 @@
             }
         });
 
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -101,6 +102,17 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // Handle search button click
+        document.getElementById('search-button').addEventListener('click', function() {
+            const postcode = document.getElementById('postcode-input').value;
+            if (postcode) {
+                localStorage.setItem('customerPostcode', postcode); // Store the customer postcode
+                window.location.href = 'food.html'; // Redirect to food.html
+            } else {
+                alert('Please enter a postcode.');
+            }
         });
     </script>
 </body>

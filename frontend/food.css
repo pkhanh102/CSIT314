@@ -196,44 +196,58 @@ a {
 
 /* Restaurant */
 
-.restaurant {
-    margin-bottom: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
+.restaurant-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
 }
 
-.restaurant-container {
-    margin-top: 3%;
+.restaurant-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
+.restaurant {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    padding-bottom: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 250px; /* Set a fixed width for the restaurant item */
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: 	#777777;
+}
+
 .restaurant-img {
-    box-shadow: 2px 2px 2px black;
-    width: 250px;
-    height: 150px;
-    border-radius: 10%;
+    width: 250px; /* Set desired width */
+    height: 120px; /* Set desired height */
+    object-fit: cover; /* Ensures the image covers the entire area */
+    border-radius: 10px 10px 0px 0px; /* Optional: for rounded corners */
 }
 
 .restaurant-name {
-    font-size: 23px;
-    padding-left: 2%;
-    color: #FFFFFF;
-}
-
-.restaurant span {
-    margin-right: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: white;
+    padding-left: 10px;
+    padding-top: 5px;
 }
 
 .rating {
-    color: yellow;
-    padding-left: 2%;
-    font-size: 18px;
+    color: white;
+    padding-left: 10px;
 }
 
 .distance {
-    color: lightgreen;
-    font-size: 18px;
+    color: white;
+    padding-left: 10px;
 }
 
 

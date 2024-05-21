@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.logging.Logger;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -42,17 +43,30 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     private ModelMapper modelMapper;
 
+    private static final Logger LOGGER = Logger.getLogger(RestaurantServiceImpl.class.getName());
+
     @Override
     public List<RestaurantDto> getRestaurantByParams(Map<String, Object> params, Integer customerPostcode) {
         RestaurantSearchRequest request = restaurantConverter.paramsToRequest(params);
-        return restaurantRepository.findByNameContainsAndCategoryContains(request.getKeyword(), request.getCategory()).stream()
-                .map(restaurantEntity -> restaurantConverter.entityToDto(restaurantEntity, customerPostcode))
+
+        List<RestaurantEntity> restaurantEntities = restaurantRepository.findByNameContainsAndCategoryContains(request.getKeyword(), request.getCategory());
+        LOGGER.info("Fetched " + restaurantEntities.size() + " restaurants from repository");
+
+        List<RestaurantDto> restaurantDtos = restaurantEntities.stream()
+                .map(restaurantEntity -> {
+                    LOGGER.info("Converting RestaurantEntity to RestaurantDto for restaurant: " + restaurantEntity.getName());
+                    return restaurantConverter.entityToDto(restaurantEntity, customerPostcode);
+                })
                 .filter(restaurantDto -> restaurantDto.getDistance() >= request.getDistanceFrom()
                         && restaurantDto.getDistance() <= request.getDistanceTo()
                         && restaurantDto.getStars() >= request.getRatingFrom()
                         && restaurantDto.getStars() <= request.getRatingTo())
                 .collect(Collectors.toList());
+
+        LOGGER.info("Filtered down to " + restaurantDtos.size() + " restaurants after applying criteria");
+        return restaurantDtos;
     }
+
 
     @Override
     public boolean existRestaurant(String email, String password) {
