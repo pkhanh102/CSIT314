@@ -48,8 +48,6 @@
                     <label style="font-weight: bold;padding-right: 71px" for="password">Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                
-                <button style="margin-top: 16rem;" type="submit">Sign up</button>
                 <button style="margin-top: 16rem;" type="submit">Sign up</button>
             </form>
         </div>
@@ -57,12 +55,6 @@
             <a href="login.html" style="color: aliceblue;">Click here to back to login page</a>
         </div>
     </main>
-
-    <footer>
-        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
-        <p>&copy; 2024 ROCKETMEAL</p>
-    </footer>
-
     <script>
         document.getElementById('signup-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -82,7 +74,7 @@
                 phoneNumber: phone
             };
     
-            fetch('http://localhost:8081/customers/signup', {
+            fetch('http://localhost:8888/customers/signup', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
