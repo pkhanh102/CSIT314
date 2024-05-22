@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RocketMeal</title>
     <link rel="stylesheet" href="food.css">
 </head>
-
 <body>
     <header>
         <!-- NAVIGATION BAR -->
@@ -15,7 +13,7 @@
         <div>
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
-                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
                 <li class="nav_list"><a href="#about-us">About Us</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
@@ -90,6 +88,19 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('customerId'); // Remove customer ID
+                    window.location.href = 'index.html';
+                });
+            }
+
             const customerPostcode = localStorage.getItem('customerPostcode');
             const searchForm = document.getElementById('search-form');
             const searchBox = document.getElementById('search-box');
@@ -170,6 +181,7 @@
                     restaurantItem.addEventListener('click', function() {
                         // Store restaurant details in localStorage
                         localStorage.setItem('selectedRestaurant', JSON.stringify(restaurant));
+                        localStorage.setItem('selectedRestaurantId', restaurant.restaurantId);
                         window.location.href = `restaurant-page.html?id=${restaurant.restaurantId}`;
                     });
                 });
@@ -181,5 +193,4 @@
         });
     </script>
 </body>
-
 </html>

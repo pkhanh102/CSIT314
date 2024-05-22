@@ -15,7 +15,7 @@
         <div>
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
-                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
                 <li class="nav_list"><a href="#about-us">About Us</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
@@ -57,13 +57,13 @@
                     <hr>
                     <div class="text_img" style="padding-top: 20px;">
                         <img class="info_img" src="images/clock.png" alt="Clock Image">
-                        <p id="open_status" class="info_text" style="color: green;">Open Status</p>
+                        <p class="info_text" style="color: green;">Open Status</p>
                     </div>
 
                     <hr>
                     <div class="text_img" style="padding-top: 20px;">
                         <img class="info_img" src="images/phone-call.png" alt="Phone Image">
-                        <p id="phone_number" class="info_text">Phone Number</p>
+                        <p class="info_text">Phone Number</p>
                     </div>
                 </div>
             </div>
@@ -86,13 +86,22 @@
         </div>
     </main>
 
-    <footer>
-        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
-        <p>&copy; 2024 ROCKETMEAL</p>
-    </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Check login state and update navigation bar
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('customerId'); // Remove customer ID
+                    window.location.href = 'index.html';
+                });
+            }
+
             const params = new URLSearchParams(window.location.search);
             const restaurantId = params.get('id');
             const restaurant = JSON.parse(localStorage.getItem('selectedRestaurant'));
@@ -165,7 +174,7 @@
             function displayItems(items, containerId) {
                 const container = document.getElementById(containerId);
                 container.innerHTML = ''; // Clear existing items
-            
+
                 let row;
                 items.forEach((item, index) => {
                     if (index % 6 === 0) {
@@ -175,10 +184,10 @@
                     }
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'best_img';
-            
+
                     // Construct the image path using the dish name
                     const imageSrc = `images/dishes/${item.name}.png`;
-            
+
                     itemDiv.innerHTML = `
                         <img class="best_item_img" src="${imageSrc}" alt="${item.name}">
                         <button class="add_button" data-name="${item.name}" data-price="${item.price}" data-id="${item.id}">+</button>
@@ -186,7 +195,7 @@
                     `;
                     row.appendChild(itemDiv);
                 });
-            
+
                 if (items.length === 0) {
                     container.innerHTML = '<p>No items found.</p>';
                 }

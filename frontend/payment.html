@@ -15,9 +15,8 @@
         <div>
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
-                <li class="nav_list"><a href="">Login</a></li>
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
                 <li class="nav_list"><a href="">About Us</a></li>
-                <li class="nav_list"><a href="">Food Categories</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
         </div>
@@ -33,24 +32,23 @@
                     <div class="input_items">
                         <div class="input_lines">
                             <div>First Name</div>
-                            <input style="margin-left: 4rem; padding: 10px;  padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your first name" required autofocus>
+                            <input id="first-name" style="margin-left: 4rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your first name" required autofocus>
                         </div>
 
                         <div class="input_lines">
                             <div>Last Name</div>
-                            <input style="margin-left: 4rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your last name" required autofocus>
+                            <input id="last-name" style="margin-left: 4rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your last name" required autofocus>
                         </div>
 
                         <div class="input_lines">
                             <div>Email</div>
-                            <input style="margin-left: 6.35rem; padding: 10px;  padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your email address" required autofocus>
+                            <input id="email" style="margin-left: 6.35rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your email address" required autofocus>
                         </div>
 
                         <div class="input_lines">
                             <div>Phone number</div>
-                            <input style="margin-left: 2.25rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your phone number" required autofocus>
+                            <input id="phone-number" style="margin-left: 2.25rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your phone number" required autofocus>
                         </div>
-
                     </div>
             </div>
 
@@ -64,30 +62,11 @@
                             </div>
                             <div class="input_lines">
                                 <img class="img_pay" src="images/img/Screen Shot 2024-04-25 at 00.55.42.png" alt="Food1" style="margin-right: 10px;">
-                                <input style="margin-left: 0rem;width: 70%;margin-top: 0.1rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your address" required autofocus>
+                                <input id="address" style="margin-left: 0rem;width: 300px;margin-top: 5px; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your address" required autofocus>
                             </div>
-                            <input style="margin-left: 6.5rem;width: 60%;margin-top: 0.5rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your postcode" required autofocus>
-                            
-                            <div style="margin-left: 10%;margin-top: 0.5rem;">Delivery Time</div>
-                            <div style="padding-top: 10px; " class="input_lines">
-                                <div class="payment_box_c">
-                                    <div class="input_lines_b">
-                                        <div style="padding-top: 10px;">Standard <br/> 15-20 mins <br/></div>
-                                    </div>
-                                </div>
-                                <div style="margin-left: 2rem;" class="payment_box_c">
-                                    <div class="input_lines_b">
-                                        <div>Express <br/> 5-10 mins <br/> +$2.99</div>
-                                    </div>
-                                </div>
-                            </div>
-    
+                            <input id="postcode" style="margin-left: 6.5rem;width: 200px;margin-top: 20px; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="Enter your postcode" required autofocus>
                         </div>
                 </div>
-                
-                <img class="payment_map" src="images/img/Screen Shot 2024-04-25 at 00.56.19.png" alt="Map">
-                
-
             </div>
             
 
@@ -98,51 +77,142 @@
                         <div style="margin-left: 1rem;font-weight: bold;">Credit Card/ Debit Card</div>
                     </div>
 
-
-
                     <div class="input_items">
                         <div style="margin-left: 10%;">Card Number</div>
                         <div class="input_lines">
-                            <input style="width: 40%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="" required autofocus>
+                            <input id="card-number" style="width: 40%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="" required autofocus>
                             <div style="margin-left: 1rem;">CVV</div>
-                            <input style="margin-left: 1rem;width: 10%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="" required autofocus>
+                            <input id="cvv" style="margin-left: 1rem;width: 10%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="" required autofocus>
                         </div>
 
                         <div style="margin-left: 10%;margin-top: 1rem;">Expiration</div>
-                        <input style="margin-left: 4rem;width: 40%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="MM/YY" required autofocus>
+                        <input id="expiry-date" style="margin-left: 4rem;width: 40%;margin-top: 0.2rem; padding: 10px; padding-top: 12px; padding-bottom: 12px;" class="input_box" type="text" placeholder="MM/YY" required autofocus>
                     </div>
             </div>
 
             <div style="height: 5rem;" class="payment_box_b">
                 <div style="padding-top: 0rem;" class="input_lines">
                     <div class="info" style="font-size: larger;">Total</div>
-                    <div style="margin-left: 63%;" class="info">$187.3</div>
+                    <div id="total-amount" style="margin-left: 63%;" class="info">$0.00</div>
                 </div>  
             </div>
 
 
             <!-- Pay Button -->
             <div style="display: flex; align-items: center; margin: auto;">
-                <button class="pay_button">Cancel</button>
-                <button class="pay_button">Confirm</button>
+                <button class="pay_button" id="cancel-button">Cancel</button>
+                <button class="pay_button" id="confirm-button">Confirm</button>
             </div>
             
         </div>
-
-
     </main>
 
-    <footer>
-        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
-        <p>&copy; 2024 ROCKETMEAL</p>
-    </footer>
-
     <script>
-        
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('customerId'); // Remove customer ID
+                    window.location.href = 'index.html';
+                });
+            }
+
+            const totalAmountElement = document.getElementById('total-amount');
+            const totalAmount = localStorage.getItem('totalCost');
+            totalAmountElement.textContent = `$${totalAmount}`; 
+
+            const customerId = localStorage.getItem('customerId');
+            if (customerId) {
+                fetch(`http://localhost:8081/customers/profile?id=${customerId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            document.getElementById('first-name').value = data.firstName || '';
+                            document.getElementById('last-name').value = data.lastName || '';
+                            document.getElementById('email').value = data.email || '';
+                            document.getElementById('phone-number').value = data.phoneNumber || '';
+                        }
+                    })
+                    .catch(error => console.error('Error fetching customer profile:', error));
+            }
+
+            const customerPostcode = localStorage.getItem('customerPostcode');
+            if (customerPostcode) {
+                document.getElementById('postcode').value = customerPostcode;
+            }
+
+            const confirmButton = document.getElementById('confirm-button');
+            confirmButton.addEventListener('click', function() {
+                const restaurant = JSON.parse(localStorage.getItem('selectedRestaurant'));
+                const restaurantId = localStorage.getItem('selectedRestaurantId');
+
+                if (!restaurantId) {
+                    alert('Restaurant ID not found.');
+                    return;
+                }
+
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const address = document.getElementById('address').value;
+                const postcode = document.getElementById('postcode').value;
+                const cardNumber = document.getElementById('card-number').value;
+                const cvv = document.getElementById('cvv').value;
+                const expiryDate = document.getElementById('expiry-date').value;
+
+                const dishRequestDtoList = cart.map(item => ({
+                    dishId: item.id,
+                    quantity: item.quantity
+                }));
+
+                const orderDto = {
+                    customerId: parseInt(customerId),
+                    restaurantId: restaurantId,
+                    total: parseFloat(totalAmount),
+                    customerPostcode: parseInt(postcode),
+                    customerAddress: address,
+                    cardNumber: cardNumber,
+                    ccv: cvv,
+                    expiryDate: expiryDate,
+                    dishRequestDtoList: dishRequestDtoList,
+                    comboRequestDtoList: [] // Assuming no combo items for simplicity
+                };
+
+                console.log('Order DTO:', orderDto); // Log the order DTO for debugging
+
+                fetch('http://localhost:8081/customers/order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderDto)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Order placed successfully!');
+                    localStorage.removeItem('cart');
+                    window.location.href = 'foodTrack.html';
+                })
+                .catch(error => {
+                    console.error('Error placing order:', error);
+                    alert('An error occurred while placing your order. Please try again.');
+                });
+            });
+
+            document.getElementById('cancel-button').addEventListener('click', function() {
+                window.location.href = 'orderDetail.html';
+            });
+        });
     </script>
 </body>
 
 </html>
-
-
 

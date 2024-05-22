@@ -23,7 +23,7 @@
     </header>
 
     <main>
-		<div class="box">
+        <div class="box">
             <p style="text-align: center; color: #000; font-size: 30px; font-weight: bold;">Login to your account</p>
             <form id="login-form">
                 <div class="email_input">
@@ -42,7 +42,6 @@
         <div class="signup-box">
             <p id="signup-text">Don't have an account? <a href="signup.html" style="text-decoration: underline;">click here to signup</a></p>
         </div>
-        
     </main>
 
     <footer>
@@ -74,6 +73,7 @@
                 if (data.message === "Customer logged in") {
                     alert(data.message);
                     localStorage.setItem('isLoggedIn', 'true'); // Store login state
+                    localStorage.setItem('customerId', data.customerId); // Store customer ID
                     window.location.href = 'index.html'; // Redirect to index page
                 } else {
                     alert(data.message); // Show error message

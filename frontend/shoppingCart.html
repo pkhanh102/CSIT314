@@ -15,7 +15,7 @@
         <div>
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
-                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
                 <li class="nav_list"><a href="#about-us">About Us</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
@@ -39,18 +39,28 @@
             </div>
 
             <!-- Cart Button -->
-            <button class="cart_button">Checkout Now</button>
+            <button class="cart_button" id="checkout-button">Checkout Now</button>
         </div>
     </main>
 
-    <footer>
-        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
-        <p>&copy; 2024 ROCKETMEAL</p>
-    </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Check login state and update navigation bar
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('customerId'); // Remove customer ID
+                    window.location.href = 'index.html';
+                });
+            }
+
             const cartBox = document.getElementById('cart-box');
+            const checkoutButton = document.getElementById('checkout-button');
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
             function displayCartItems() {
@@ -114,6 +124,12 @@
                     displayCartItems();
                 }
             }
+
+            // Handle checkout button click
+            checkoutButton.addEventListener('click', function() {
+                localStorage.setItem('cart', JSON.stringify(cart));
+                window.location.href = 'orderDetail.html';
+            });
 
             displayCartItems();
         });
