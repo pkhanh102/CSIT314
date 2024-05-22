@@ -24,52 +24,24 @@
     </header>
 
     <main>
-        
-        <div class = "box">
-            <b class = "receiptHeading">Order Details</b>
+        <div class="box">
+            <b class="receiptHeading">Order Details</b>
             <hr>
-            <b class = "orderFromPlace">Your order from McDonalds</b>
+            <b class="orderFromPlace">Your Membership</b>
             <br>
-            <div class = "itemsOrdered">
-                <p class = "quantity"> 1x </p>
-                <p class = "item">Big Mac Combo</p>
-                <p class = "price">$10.99</p>
-            </div>
-            
-            <div class = "itemsOrdered">
-                <p class = "quantity"> 2x </p>
-                <p class = "item">CheeseBurger</p>
-                <p class = "price">$5.99</p>
-            </div>
-
-            <div class = "itemsOrdered">
-                <p class = "quantity"> 1x </p>
-                <p class = "item">McNuggets</p>
-                <p class = "price">$12.99</p>
+            <div class="itemsOrdered">
+                <p class="item">VIP Type: <span id="vipType"></span></p>
+                <p class="price" id="vipPrice"></p>
             </div>
             
             <hr>
-            <div class = "subtotal">
-                <p class = "textHeading">Subtotal: </p>
-                <p class = "price">$12.99</p>
-            </div>
-            <div class = "deliveryFee">
-                <p class = "textHeading">Delivery Fee: </p>
-                <p class = "price">$12.99</p>
-            </div>
-            <div class = "serviceFee">
-                <p class = "textHeading">Service Fee: </p>
-                <p class = "price">$12.99</p>
-            </div>
-
-            <hr>
-            <div class = "total">
-                <p class = "textHeading">Total: </p>
-                <p class = "price">$12.99</p>
+            <div class="total">
+                <p class="textHeading">Total: </p>
+                <p class="price" id="totalPrice"></p>
             </div>
         </div>
         <div class="container" style="display: flex; align-items: center; margin-left: 35%;">
-            <button class="buttonText" style="margin-right: 20px;">Back</button>
+            <button class="buttonText" style="margin-right: 20px;" onclick="window.history.back()">Back</button>
             <button class="buttonText">Pay</button>
         </div>
     </main>
@@ -78,13 +50,16 @@
         <p>&copy; 2024 ROCKETMEAL</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Extract query parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const vipType = urlParams.get('vipType');
+        const price = urlParams.get('price');
+
+        document.getElementById('vipType').textContent = vipType;
+        document.getElementById('vipPrice').textContent = price;
+        document.getElementById('totalPrice').textContent = price;
+    </script>
 </body>
 
 </html>
-
-
-
-
-
-

@@ -112,7 +112,7 @@ public class CustomerApi {
     public ResponseEntity<MessageResponse> cancelMembership(@RequestBody MembershipDto membershipDto) {
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new MessageResponse("Membership canceled, your current membership remains till the expiration date"));
+                .body(new MessageResponse("Membership canceled successfully, your current membership remains till the expiration date"));
     }
 
     /*
