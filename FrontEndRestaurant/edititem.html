@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Item</title>
     <link rel="stylesheet" href="itemAdjust.css">
 </head>
-
 <body>
     <header>
         <!-- NAVIGATION BAR -->
@@ -24,34 +22,34 @@
     </header>
 
     <main>
-		<div class="box">
-			<p style="color: #000; font-size: 30px; font-weight: bold; text-align:center;">Edit Item</p>
-			<form>
+        <div class="box">
+            <p style="color: #000; font-size: 30px; font-weight: bold; text-align:center;">Edit Item</p>
+            <form id="editForm">
                 <div class="input">
-                    <label style= "font-weight: bold; padding-right: 90px;" for="itemname">Item name</label>
-                    <input type="text" id="itemname">
+                    <label style="font-weight: bold; padding-right: 90px;" for="itemname">Item name</label>
+                    <input type="text" id="itemname" name="itemname">
                 </div>
                 <div class="input">
-                    <label style= "font-weight: bold; padding-right: 80px;" for="description">Description</label>
-                    <input type="text" id="description">
+                    <label style="font-weight: bold; padding-right: 80px;" for="description">Description</label>
+                    <input type="text" id="description" name="description">
                 </div>
                 <div class="input">
-                    <label style= "font-weight: bold; padding-right: 130px;" for="price">Price</label>
-                    <input type="number" id="price">
+                    <label style="font-weight: bold; padding-right: 130px;" for="price">Price</label>
+                    <input type="number" id="price" name="price">
                 </div>
                 <div class="input">
                     <label style="font-weight: bold; padding-right: 70px;">Upload Image</label>
-                    <input style="margin-left: -4px;" type="file" id="imageUpload" accept="image/*">
+                    <input style="margin-left: -4px;" type="file" id="imageUpload" name="imageUpload" accept="image/*">
                 </div>
                 <div class="image-preview" id="imagePreview">
                     <img src="" alt="Image Preview" class="imageDisplay" style="display:none;">
                     <span class="defaultText">Image Preview</span>
                 </div>
-			</form>
-		</div>
+            </form>
+        </div>
         <div class="button-container">
-            <button class="custom-button" type="submit">Cancel</button>
-            <button class="custom-button" type="submit">Done</button>
+            <button class="custom-button" type="button" onclick="cancelEdit()">Cancel</button>
+            <button class="custom-button" type="button" onclick="saveEdit()">Done</button>
         </div>
     </main>
 
@@ -60,7 +58,67 @@
         <p>&copy; 2024 ROCKETMEAL</p>
     </footer>
 
-    <script src="imagePreview.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const itemId = JSON.parse(localStorage.getItem('itemId'));
+            if(itemId)
+                getDish();
+                function getDish() {
+                    fetch(`http://localhost:8081/restaurants/food/dish?dishId=${itemId}`, {
+                    method: 'GET'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data)
+                        {
+                            document.getElementById('itemname').value = data.name;
+                            document.getElementById('description').value = data.description;
+                            document.getElementById('price').value = data.price;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+        });
 
+
+        function cancelEdit() {
+            window.location.href = 'adjustItem.html';
+        }
+
+        function saveEdit() {
+            const itemData = {
+                id: parseInt(localStorage.getItem('itemId')),
+                restaurantId: parseInt(localStorage.getItem('restaurantId')),
+                name: document.getElementById('itemname').value,
+                description: document.getElementById('description').value,
+                price: parseFloat(document.getElementById('price').value),
+                image: []
+            };
+
+            console.log(itemData);
+
+            fetch(' http://localhost:8081/restaurants/food/dish', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(itemData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Dish updated') {
+                    alert('Item updated successfully');
+                    window.location.href = 'adjustItem.html';
+                } else {
+                    alert('Update failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
 </html>

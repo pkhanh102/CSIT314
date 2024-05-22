@@ -26,7 +26,7 @@
     <main>
 		<div class="box">
 			<p style="text-align: center; color: #000; font-size: 30px; font-weight: bold;">Login to your account</p>
-			<form>
+			<form id="loginForm">
                 <div class="email_input">
                     <label style="font-weight: bold; padding-right: 90px;" for="email">Email</label>
                     <input type="text" id="email" name="email" required>
@@ -36,13 +36,14 @@
                     <label style="font-weight: bold;" for="password" >Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
+                <button type="submit">Login</button>
 			</form>
 		</div>
-        <div>
+        <!-- <div>
             <form action="restaurant-page.html" method="post">
                 <button type="submit">Login</button>
             </form>
-        </div>
+        </div> -->
     </main>
 
     <footer>
@@ -50,7 +51,36 @@
         <p>&copy; 2024 ROCKETMEAL</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js">
+    </script>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Ngăn chặn form submit mặc định
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        console.log(email);
+
+        fetch('http://localhost:8081/customers/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, password: password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Thực hiện hành động sau khi nhận được phản hồi từ server
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
 </body>
 
 </html>
