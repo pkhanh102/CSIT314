@@ -58,7 +58,7 @@
                 </ul>
             </div>
             <div class="subscribe_input">
-                <button class="subscribe_button">Subscribe Now</button>
+                <button id="subscribe-button" class="subscribe_button">Subscribe Now</button>
             </div>
         </div>
 
@@ -112,6 +112,11 @@
             } else {
                 alert('Please enter a postcode.');
             }
+        });
+
+        // Handle subscribe button click
+        document.getElementById('subscribe-button').addEventListener('click', function() {
+            window.location.href = 'membership.html'; // Redirect to membership.html
         });
     </script>
 </body>
