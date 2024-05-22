@@ -13,7 +13,7 @@
                 <div>
                     <p class="logo_description">30 minutes</p>
                     <ul class="navigation_bar">
-                        <li class="nav_list"><a href="">Login</a></li>
+                        <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
                         <li class="nav_list"><a href="">About Us</a></li>
                         <li class="nav_list"><a href="">Food Categories</a></li>
                         <li class="nav_list"><a href="index.html">Home</a></li>
@@ -41,6 +41,9 @@
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
                     const restaurantId = localStorage.getItem('restaurantId'); // Lấy restaurantId từ localStorage
+                    if(!restaurantId)
+                    window.location.href = '/FrontEndRestaurant/restaurantLogin.html'
+                    
                     // Gọi hàm fetch để lấy danh sách món ăn
                     localStorage.setItem('selectedBestSeller', JSON.stringify([]));
 
@@ -131,7 +134,11 @@
                         });
                     });
                 });
-                
+
+                function logOut() {
+                    localStorage.removeItem("restaurantId");
+                    window.location.href = "/FrontEndRestaurant/restaurantLogin.html";
+                }
                 </script>
                 
         </body>

@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Information</title>
     <link rel="stylesheet" href="itemAdjust.css">
 </head>
-
 <body>
     <div class="wrapper">
         <header>
@@ -16,7 +14,7 @@
             <div>
                 <p class="logo_description">30 minutes</p>
                 <ul class="navigation_bar">
-                    <li class="nav_list"><a href="">Login</a></li>
+                    <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
                     <li class="nav_list"><a href="">About Us</a></li>
                     <li class="nav_list"><a href="">Food Categories</a></li>
                     <li class="nav_list"><a href="index.html">Home</a></li>
@@ -27,36 +25,41 @@
         <main>
             <div class="box">
                 <p style="color: #000; font-size: 30px; font-weight: bold; text-align:center;">Restaurant Info</p>
-                <form>
-                    <div class="input">
-                        <label style="font-weight: bold; padding-right: 90px;">Restaurant name</label>
-                        <input type="text" id="name">
-                    </div>
-                    <div class="input">
-                        <label style="font-weight: bold; padding-right: 80px;">Address</label>
-                        <input style="margin-left: 76px;" type="text" id="address">
-                    </div>
-                    <div class="input">
-                        <label style="font-weight: bold; padding-right: 130px;">Open time</label>
-                        <input style="margin-left: 12px;" type="number" id="openTime">
-                    </div>
-                    <div class="input">
-                        <label style="font-weight: bold; padding-right: 130px;">Phone number</label>
-                        <input style="margin-left: -20px;" type="text" id="phoneNumber">
-                    </div>
-                    <div class="input">
-                        <label style="font-weight: bold; padding-right: 70px;">Upload Image</label>
-                        <input style="margin-left: 47px;" type="file" id="imageUpload" accept="image/*">
-                    </div>
-                    <div class="image-preview" id="imagePreview">
-                        <img src="" alt="Image Preview" class="imageDisplay" style="display:none;">
-                        <span class="defaultText">Image Preview</span>
+                <form id="infoForm">
+                    <table>
+                        <tr>
+                            <td><label style="font-weight: bold;">Restaurant name</label></td>
+                            <td><input type="text" id="name"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">Address</label></td>
+                            <td><input type="text" id="address"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">PostCode</label></td>
+                            <td><input type="text" id="postCode"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">Start time</label></td>
+                            <td><input type="time" id="startTime"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">End time</label></td>
+                            <td><input type="time" id="endTime"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">Phone number</label></td>
+                            <td><input type="text" id="phoneNumber"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">Category</label></td>
+                            <td><input type="text" id="category"></td>
+                        </tr>
+                    </table>
+                    <div class="button-container">
+                        <button class="custom-button" type="button" onclick="updateRestaurantInfo()">Done</button>
                     </div>
                 </form>
-            </div>
-            <div class="button-container">
-                <button class="custom-button" type="submit">Cancel</button>
-                <button class="custom-button" type="submit">Done</button>
             </div>
         </main>
     </div>
@@ -65,7 +68,89 @@
         <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
         <p>&copy; 2024 ROCKETMEAL</p>
     </footer>
-    <script src="imagePreview.js"></script>
-</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const restaurantId = localStorage.getItem('restaurantId'); // Lấy restaurantId từ localStorage
+            if(!restaurantId)
+                window.location.href = '/FrontEndRestaurant/restaurantLogin.html'
+            
+            // Gọi hàm fetch để lấy danh sách món ăn
+            fetchInfoRestaurant();
 
+            function fetchInfoRestaurant() {
+                fetch(`http://localhost:8081/restaurants/profile?id=${restaurantId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        displayRestaurant(data.restaurantDto.name, data.address, data.phone, data.restaurantDto.category);
+                    })
+                    .catch(error => console.error('Error fetching restaurant:', error));
+            }
+
+            function displayRestaurant(name, address, phoneNumber, category) {
+                var inputName = document.getElementById("name");
+                inputName.value = name;
+                var inputAddress = document.getElementById("address");
+                inputAddress.value = address;
+                var inputPhoneNumber = document.getElementById("phoneNumber");
+                inputPhoneNumber.value = phoneNumber;
+                var inputCategory = document.getElementById("category");
+                inputCategory.value = category;
+            }
+        })
+
+        function updateRestaurantInfo() {
+            const restaurantId = localStorage.getItem('restaurantId');
+            const restaurantIdInt = parseInt(restaurantId, 10);
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const postCode = document.getElementById('postCode').value;
+            const postCodeInt = parseInt(postCode, 10);
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const category = document.getElementById('category').value;
+
+            sendUpdateRequest(restaurantIdInt, name, address, postCode, startTime, endTime, phoneNumber, category);
+        }
+
+        function sendUpdateRequest(restaurantId, name, address, postCode, startTime, endTime, phoneNumber, category) {
+            const updateData = {
+                id: restaurantId,
+                name: name,
+                address: address,
+                postCode: postCode,
+                startTime:startTime,
+                endTime: endTime,
+                phone: phoneNumber,
+                category: category
+            };
+
+            fetch('http://localhost:8081/restaurants/info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Restaurant info updated') {
+                    alert('Information updated successfully');
+                    window.location.href = 'restaurantPage.html';
+                } else {
+                    alert('Update failed: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function logOut() {
+            localStorage.removeItem("restaurantId");
+            window.location.href = "/FrontEndRestaurant/restaurantLogin.html";
+        }
+    </script>
+</body>
 </html>
