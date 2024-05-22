@@ -25,11 +25,9 @@
     <main>
         <!-- SHOPPING CART -->
         <div class="cart_container">
-            <form action="enter-page.html" method="post">
-                <button type="submit">
-                    <input class="cart_logo" type="image" src="images/cart.png" alt="Shopping Cart">
-                </button>
-            </form>
+            <button id="cart-button" style="border-radius: 10px;">
+                <img class="cart_logo" src="images/cart.png" alt="Shopping Cart">
+            </button>
         </div>
 
         <!-- RESTAURANT LOGO, COVER & INFO -->
@@ -183,7 +181,7 @@
             
                     itemDiv.innerHTML = `
                         <img class="best_item_img" src="${imageSrc}" alt="${item.name}">
-                        <button class="add_button">+</button>
+                        <button class="add_button" data-name="${item.name}" data-price="${item.price}" data-id="${item.id}">+</button>
                         <p class="best_text">${item.name}<br>$${item.price}</p>
                     `;
                     row.appendChild(itemDiv);
@@ -192,7 +190,36 @@
                 if (items.length === 0) {
                     container.innerHTML = '<p>No items found.</p>';
                 }
+
+                // Add event listeners to "Add" buttons
+                const addButtons = container.querySelectorAll('.add_button');
+                addButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const name = this.getAttribute('data-name');
+                        const price = parseFloat(this.getAttribute('data-price'));
+                        const id = parseInt(this.getAttribute('data-id'));
+                        addToCart({ id, name, price });
+                    });
+                });
             }
+
+            function addToCart(item) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find(cartItem => cartItem.id === item.id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ ...item, quantity: 1 });
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert('Item added to cart!');
+            }
+
+            // Navigate to shopping cart page
+            document.getElementById('cart-button').addEventListener('click', function() {
+                window.location.href = 'shoppingCart.html';
+            });
+
         });
     </script>
 </body>

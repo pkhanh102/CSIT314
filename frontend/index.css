@@ -19,7 +19,6 @@ header {
 
 .logo_name {
     color: #E5B53A;
-    
     padding-left: 30px;
     padding-top: 20px;
 }
@@ -266,96 +265,76 @@ main {
 }
 .cart_box{
     width: 45rem;
-    height: 45rem;
+    min-height: 20rem;
     border-radius: 30px;
     background-color: white;
     margin: auto;
     margin-top: 20px;
+    padding: 20px;
+    box-shadow: 5px 5px #888888;
 }
 .cart_button{
     background-color: #E01A1A;
     border-radius: 20px;
     width: 200px;
-    height: 40px;
+    height: 60px;
     color: #FFFFFF;
     outline: none;
     font-size: 15px;
     margin: auto;
     margin-top: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 18px;
 }
 .cart_items{
-    padding-top: 15px; 
-    padding-bottom:1px;
+    padding: 15px 0;
     display: flex;
     align-items: center;
-}
-.adjust_btn{
-    font-size: 22px;
-    color: #FFFFFF;
-    display: flex;
-    justify-content: left;
-    margin-left: 8%;
-    margin-top: 0;
-    height: 20px;
-    
-}
-.quantity-btn{
-    width: 20px; 
-    height: 20px;
-    border-color: #ffffff;
-    border-radius: 6px;
-}
-.delete-btn{
-    width: 64px; 
-    height: 24px;
-    margin-left: 4%;
-    border-radius: 10px;
-    background-color: red;
-    border-color: #ffffff;
-    color: white;
+    justify-content:flex-start;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .img_items{
     width: 100px; 
     height: 80px;
-    margin-left: 10%;
     border-radius: 20px;
+    margin-left: 50px;
+    margin-right: 20px;
+}
+.item_details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 .item_name{
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
+    justify-content: flex-start;
 }
 .item_description{
-    font-size: 12px;
+    font-size: 14px;
     font-style: italic;
 }
-.item_price{
-    font-size: 14px;
-    font-weight: bold;
-    margin-left: 10%;
-}
-.total_text{
-    font-size: 17px;
-    margin-left: 15%;
-    font-weight: bold;
-    margin-top: 10px;
-}
-.total_price{
-    padding-top: 10px;
-    font-size: 17px;
-    font-weight: bold;
-    margin-left: 20rem;
-}
-.total_items{
-    padding-top: 6px; 
-    padding-bottom:1px;
+.adjust_btn{
     display: flex;
-    align-items: center;
+    justify-content: center;
+    margin: auto;
 }
-.total_price_a{
-    padding-top: 10px;
-    font-size: 17px;
+.quantity-btn{
+    width: 30px; 
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.item_price{
+    font-size: 18px;
     font-weight: bold;
-    margin-left: 23.5rem;
+    margin-right: 30px;
 }
 
 /* --------------------Payment--------------------------------- */
