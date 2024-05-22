@@ -113,7 +113,7 @@ a {
 
 .logo_cover {
     width: 1000px;
-    height: 250px;
+    height: 300px;
     border-radius: 20px;
 
 }
@@ -203,6 +203,7 @@ a {
     position: absolute;
     top: 45%;
     left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #FFFFFF;
     color: #1F1F1F;
     padding: 5px;
@@ -220,6 +221,10 @@ a {
 
 .best_items_container {
     padding-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    margin-left: 150px;
 }
 
 .best_text {
@@ -229,10 +234,12 @@ a {
 }
 
 
+
 /* ------------------------------------------------------- */
 
 /* Full Menu */
 
 .menu_items_container {
     padding-bottom: 30px;
+    margin-left: 150px;
 }
