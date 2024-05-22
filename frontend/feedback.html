@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RocketMeal</title>
     <link rel="stylesheet" href="feedback.css">
 </head>
-
 <body>
     <header>
         <!-- NAVIGATION BAR -->
@@ -24,33 +22,24 @@
     </header>
 
     <main>
-        
-        <div class = "box">
-            <b class = "heading">Thanks for choosing us!</b>
+        <div class="box">
+            <b class="heading">Thanks for choosing us!</b>
             <br>
-            <b class = "heading">Please give us some feedback</b>
+            <b class="heading">Please give us some feedback</b>
             <div class="status-header">
                 <br>
-                <img class ="brandLogo" src="images/macca-logo.png" >
-                <img class ="star" src="images/star.png" >
-                <img class ="star" src="images/star.png" >
-                <img class ="star" src="images/star.png" >
-                <img class ="star" src="images/star.png" >
-                <img class ="star" src="images/empty-star.png" >
+                <img class="brandLogo" src="images/macca-logo.png">
+                <div id="star-container" class="star-container"></div>
                 <br>
-                
-                <b class = "brandName">McDonalds</b>
+                <b class="brandName">McDonalds</b>
                 <div>
-                    <input class = "reviewBox" type="password" id = "feedback" placeholder="Write your feedback here...">
+                    <input class="reviewBox" type="text" id="feedback" placeholder="Write your feedback here...">
                 </div>
-                <img class ="brandStar" src="images/star.png" >
             </div>
         </div>
         
-        <div class= "container">
-            <button class = "buttonText">
-                Submit
-            </button>
+        <div class="container">
+            <button id="submit-button" class="buttonText">Submit</button>
         </div>
     </main>
 
@@ -58,7 +47,62 @@
         <p>&copy; 2024 ROCKETMEAL</p>
     </footer>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedRating = 0;
 
+            // Create 5 empty stars initially
+            const starContainer = document.getElementById('star-container');
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('img');
+                star.src = 'images/empty-star.png';
+                star.classList.add('star');
+                star.dataset.rating = i;
+                star.addEventListener('click', function() {
+                    selectedRating = i;
+                    displayStars(selectedRating);
+                });
+                starContainer.appendChild(star);
+            }
+
+            // Update stars based on selected rating
+            function displayStars(rating) {
+                const stars = document.querySelectorAll('.star');
+                stars.forEach(star => {
+                    if (star.dataset.rating <= rating) {
+                        star.src = 'images/star.png';
+                    } else {
+                        star.src = 'images/empty-star.png';
+                    }
+                });
+            }
+
+            // Submit feedback
+            document.getElementById('submit-button').addEventListener('click', function() {
+                const feedback = document.getElementById('feedback').value;
+                const feedbackDto = {
+                    email: 'example@example.com', // Replace with actual user email
+                    feedback: feedback,
+                    rating: selectedRating
+                };
+
+                fetch('http://localhost:8081/customers/feedback', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(feedbackDto)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message); // Display the response message
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            });
+        });
+    </script>
+</body>
 </html>
