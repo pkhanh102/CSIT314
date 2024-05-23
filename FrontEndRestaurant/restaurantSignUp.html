@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="restaurantLogin.css">
+</head>
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a href="">About Us</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <!-- MAIN MENU & SEARCH BAR -->
+        <div style="padding-top: 100px;">
+            <form id="signUpForm" onsubmit="submitSignUpForm(event)">
+                <div class="main_logo">
+                    <img id="logo_img" src="images/rkm_logo.png" alt="Rocketmeal Logo" style="width: 60px; height: 60px;">
+                    <h1 class="logoname2">ROCKETMEAL</h1>
+                </div>
+                <div class="main_logo">
+                    <h1 class="logoname3">for restaurants</h1>
+                </div>
+                <div class="main_description">
+                    <p style="size: 30px; color: #e2d8d8;">Register to manage your business info and customize menus</p>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
+                            <td><label style="font-weight: bold; font-size: 20px;color: #ffffff;" for="email">Email</label></td>
+                            <td><input type="email" id="email" name="email" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; color: #ffffff; font-size: 20px;" for="password">Password</label></td>
+                            <td><input type="password" id="password" name="password" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; color: #ffffff; font-size: 20px;" for="confirmPassword">Confirm Password</label></td>
+                            <td><input type="password" id="confirmPassword" name="confirmPassword" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; font-size: 20px;color: #ffffff;" for="res_name">Restaurant Name</label></td>
+                            <td><input type="text" id="res_name" name="res_name" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; font-size: 20px;color: #ffffff;" for="res_category">Category</label></td>
+                            <td><input type="text" id="res_category" name="res_category" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; font-size: 20px;color: #ffffff;" for="res_address">Address</label></td>
+                            <td><input type="text" id="res_address" name="res_address" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; font-size: 20px;color: #ffffff;" for="start_time">Start Time</label></td>
+                            <td><input type="time" id="start_time" name="start_time" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; font-size: 20px;color: #ffffff;" for="end_time">End Time</label></td>
+                            <td><input type="time" id="end_time" name="end_time" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; font-size: 20px;color: #ffffff;" for="phone">Phone</label></td>
+                            <td><input type="text" id="phone" name="phone" required></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold; font-size: 20px;color: #ffffff;" for="post_code">Post Code</label></td>
+                            <td><input type="text" id="post_code" name="post_code" required></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="button-container">
+                    <button class="custom-button" type="submit" style="font-size: 20px;">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script>
+        function submitSignUpForm(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const res_name = document.getElementById('res_name').value;
+            const res_category = document.getElementById('res_category').value;
+            const res_address = document.getElementById('res_address').value;
+            const start_time = document.getElementById('start_time').value;
+            const end_time = document.getElementById('end_time').value;
+            const phone = document.getElementById('phone').value;
+            const post_code = document.getElementById('post_code').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            const signUpData = { email, password };
+
+            fetch('http://localhost:8081/restaurants/signup', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(signUpData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Restaurant registered") {
+                    // move to login
+                    window.location.href = 'restaurantLogin.html';
+                } else {
+                    alert('Sign up failed: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
