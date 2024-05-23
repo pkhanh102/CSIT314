@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Menu</title>
     <link rel="stylesheet" href="restaurantPage.css">
+    <style>
+        .best_img {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    </style>
 </head>
-
 <body>
     <header>
         <!-- NAVIGATION BAR -->
@@ -16,35 +20,21 @@
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
                 <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
-                <li class="nav_list"><a href="">About Us</a></li>
-                <li class="nav_list"><a href="">Food Categories</a></li>
-                <li class="nav_list"><a href="index.html">Home</a></li>
+                <li class="nav_list"><a href="/frontend/index.html">Home</a></li>
             </ul>
         </div>
     </header>
 
     <main>
-        <!-- SHOPPING CART-->
-        <div class="cart_container">
-            <form action="enter-page.html" method="post">
-                <!-- Enter next page here -->
-                <button type="submit">
-                    <input class="cart_logo" type="image" src="images/cart.png" alt="Shopping Cart">
-                </button>
-            </form>
-        </div>
-
         <!-- RESTAURANT LOGO, COVER & INFO-->
-        <div class="restaurant_logo">
+        <div class="restaurant_logo" style="margin-top: 60px;">
             <div class="restaurant_cover">
-                <img class="logo_cover" src="images/macca-cover.jpeg" alt="Restaurant Cover">
+                <img id="logo_cover" class="logo_cover" src="" alt="Restaurant Cover">
                 <div class="restaurant_avatar">
-                    <img class="logo_avatar" src="images/macca-logo.png" alt="Restaurant Cover">
+                    <img id="logo_avatar" class="logo_avatar" src="" alt="Restaurant Avatar">
                 </div>
             </div>
             
-            
-
             <div class="restaurant_info">
                 <div class="restaurant_info_left">
                     <div class="header_with_button">
@@ -78,12 +68,11 @@
                         <p class="info_text info_phone"></p>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <!-- BEST SELLER -->
-        <div class="best_seller_container">
+        <div class="best_seller_container" style="margin-left: 180px;">
             <div class="header_with_button">
                 <h2 class="best_header">Best Seller</h2>
                 <button style="margin-bottom: 20px;" class="add_button_header" id="change_best_seller" onclick="location.href='addBestItem.html'">
@@ -96,7 +85,7 @@
         </div>
 
         <!-- FULL MENU -->
-        <div class="menu_container">
+        <div class="menu_container" style="margin-left: 180px;">
             <div class="header_with_button">
                 <h2 class="best_header">Full menu</h2>
                 <button style="margin-bottom: 20px;" class="add_button_header" id="change_menu" onclick="location.href='adjustItem.html'">
@@ -109,103 +98,108 @@
         </div>
     </main>
 
-    <footer>
-        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
-        <p>&copy; 2024 ROCKETMEAL</p>
-    </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const restaurantId = localStorage.getItem('restaurantId'); // Lấy restaurantId từ localStorage
-            if(!restaurantId)
-                window.location.href = '    restaurantLogin.html'
+            const restaurantId = localStorage.getItem('restaurantId');
+            if (!restaurantId)
+                window.location.href = 'restaurantLogin.html';
 
-            // Gọi hàm fetch để lấy danh sách món ăn
             fetchDishes();
     
             function fetchDishes() {
                 fetch(`http://localhost:8081/restaurants/profile?id=${restaurantId}`)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
-                        if(data.restaurantDto)
+                        if (data.restaurantDto) {
                             displayRestaurant(data, data.restaurantDto);
-                        if(data.dishDtoList.length > 0)
+                            setRestaurantImages(data.restaurantDto.category);
+                        }
+                        if (data.dishDtoList.length > 0)
                             displayDishes(data.dishDtoList);
-                        if(data.bestsellerDishDtoList.length > 0)
+                        if (data.bestsellerDishDtoList.length > 0)
                             displayBestSeller(data.bestsellerDishDtoList);
                     })
                     .catch(error => console.error('Error fetching dishes:', error));
             }
 
+            function setRestaurantImages(category) {
+                const logoCover = document.getElementById('logo_cover');
+                const logoAvatar = document.getElementById('logo_avatar');
+                logoCover.src = `/frontend/images/covers/${category}.png`;
+                logoAvatar.src = `/frontend/images/restaurants/${category}.png`;
+            }
+
             function displayBestSeller(dishes) {
                 const bestSellerContainer = document.querySelector('.best_items_container');
-    
-                // Xóa các món ăn hiện tại
                 bestSellerContainer.innerHTML = '';
-    
 
-                dishes.forEach(dish => {
+                let row;
+                dishes.forEach((dish, index) => {
+                    if (index % 6 === 0) {
+                        row = document.createElement('div');
+                        row.classList.add('restaurant-row');
+                        bestSellerContainer.appendChild(row);
+                    }
                     const dishElement = createDishElement(dish);
-                    bestSellerContainer.appendChild(dishElement);
+                    row.appendChild(dishElement);
                 });
             }
     
             function displayDishes(dishes) {
                 const fullMenuContainer = document.querySelector('.menu_items_container');
-    
-                // Xóa các món ăn hiện tại
                 fullMenuContainer.innerHTML = '';
-    
 
-                dishes.forEach(dish => {
+                let row;
+                dishes.forEach((dish, index) => {
+                    if (index % 6 === 0) {
+                        row = document.createElement('div');
+                        row.classList.add('restaurant-row');
+                        fullMenuContainer.appendChild(row);
+                    }
                     const dishElement = createDishElement(dish);
-                    fullMenuContainer.appendChild(dishElement);
+                    row.appendChild(dishElement);
                 });
             }
     
             function createDishElement(dish) {
                 const dishDiv = document.createElement('div');
-                const data = dish.image;
-
-                const url = 'data:image/png;base64,' + data;
+                const imagePath = `/frontend/images/dishes/${dish.name}.png`;
 
                 dishDiv.classList.add('best_img');
 
-
                 dishDiv.innerHTML = `
-                    <img class="best_item_img" src="${url}" alt="${dish.name} Image">
-                    <button class="add_button" onclick="localStorage.setItem('itemId', ${dish.id});location.href = 'edititem.html';">
+                    <img class="best_item_img" src="${imagePath}" alt="${dish.name} Image">
+                    <button class="add_button" onclick="localStorage.setItem('itemId', ${dish.id});location.href = 'edititem.html';" style="background-color: white;">
                         <span style="position: relative; top: -5px;">...</span>
                     </button>
-                    <p class="best_text">${dish.name}<br>$${dish.price}</p>
+                    <p class="best_text" style="margin-bottom: 10px;">${dish.name}<br>$${dish.price}</p>
                 `;
 
                 return dishDiv;
             }
-    
+
+            function editItem(itemId) {
+                localStorage.setItem('itemId', itemId);
+                window.location.href = 'editItem.html';
+            }
+
             function displayRestaurant(data, info) {
-                console.log(info);
                 const restaurantNames = document.querySelectorAll('.restaurant_name');
                 restaurantNames[0].textContent = info.name;
-                const starts = document.querySelectorAll('.star_text');
-                starts[0].textContent = info.stars + '/5';
+                const stars = document.querySelectorAll('.star_text');
+                stars[0].textContent = info.stars + '/5';
                 const info_texts = document.querySelectorAll('.info_address');
                 info_texts[0].textContent = data.address;
                 const phone = document.querySelectorAll('.info_phone');
                 phone[0].textContent = data.phone;
-                //const starts = document.querySelectorAll('.star_text');
-                //starts[0].textContent = info.stars + '/5';
             }
-            
         });
 
         function logOut() {
             localStorage.removeItem("restaurantId");
-            window.location.href = "restaurantInfo.html";
+            window.location.href = "restaurantLogin.html";
         }
     </script>
-    
 </body>
-
 </html>

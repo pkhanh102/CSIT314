@@ -142,6 +142,7 @@ a {
     display: flex;
     width: 410px;
     flex-direction: column;
+    margin-right: 200px;
 }
 .restaurant_info{
     display: flex;
@@ -189,7 +190,7 @@ a {
 .restaurant_address {
     background-color: #FFFFFF;
     width: 320px;
-    height: 240px;
+    height: 220px;
     border-radius: 20px;
     float: right;   
     padding: 20px;
@@ -227,8 +228,8 @@ a {
 
 .best_img .add_button {
     position: absolute;
-    top: 45%;
-    right: 5%;
+    top: 40%;
+    right: 3%;
     background-color: #ffffff00;
     color: #1F1F1F;
     padding: 5px;
@@ -286,7 +287,7 @@ a {
     background-color: #ffffff00;
     color: #1F1F1F;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 .threeDotsButton{
     position: absolute;

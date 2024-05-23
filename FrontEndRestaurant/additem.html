@@ -14,9 +14,7 @@
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
                 <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
-                <li class="nav_list"><a href="">About Us</a></li>
-                <li class="nav_list"><a href="">Food Categories</a></li>
-                <li class="nav_list"><a href="index.html">Home</a></li>
+                <li class="nav_list"><a href="/frontend/index.html">Home</a></li>
             </ul>
         </div>
     </header>
@@ -42,7 +40,7 @@
                     <input style="margin-left: -4px;" type="file" id="imageUpload" name="imageUpload" accept="image/*">
                 </div>
                 <div class="image-preview" id="imagePreview">
-                    <img src="" alt="Image Preview" class="imageDisplay" style="display:none;">
+                    <img src="" alt="Image Preview" class="imageDisplay" style="display:none; width: 300px; height:200px;">
                     <span class="defaultText">Image Preview</span>
                 </div>
             </form>
@@ -53,17 +51,34 @@
         </div>
     </main>
 
-    <footer>
-        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
-        <p>&copy; 2024 ROCKETMEAL</p>
-    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const restaurantId = JSON.parse(localStorage.getItem('restaurantId'));
             if(!restaurantId)
-                    window.location.href = '/FrontEndRestaurant/restaurantLogin.html'
-        })
+                window.location.href = '/FrontEndRestaurant/restaurantLogin.html';
+            
+            const imageUpload = document.getElementById('imageUpload');
+            const imagePreview = document.getElementById('imagePreview');
+            const imageDisplay = imagePreview.querySelector('.imageDisplay');
+            const defaultText = imagePreview.querySelector('.defaultText');
+
+            imageUpload.addEventListener('change', () => {
+                const file = imageUpload.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        imageDisplay.src = reader.result;
+                        imageDisplay.style.display = 'block';
+                        defaultText.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    imageDisplay.style.display = 'none';
+                    defaultText.style.display = 'block';
+                }
+            });
+        });
 
         function cancelAdd() {
             window.location.href = 'restaurantPage.html';
@@ -82,38 +97,66 @@
                 name: document.getElementById('itemname').value,
                 description: document.getElementById('description').value,
                 price: parseFloat(document.getElementById('price').value),
-                image: []
+                image: ''
             };
 
+            resizeImage(file, 100, 100, (resizedImage) => {
+                itemData.image = resizedImage.split(',')[1]; // Get the base64 part of the data URL
+                uploadItem(itemData);
+            });
+        }
+
+        function resizeImage(file, maxWidth, maxHeight, callback) {
             const reader = new FileReader();
-
             reader.onload = function(event) {
-                const arrayBuffer = event.target.result;
-                const bytes = new Uint8Array(arrayBuffer);
-                itemData.image = Array.from(bytes);
-            };
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
 
-            reader.readAsArrayBuffer(file);
-
-            fetch('http://localhost:8081/restaurants/food/dish', {
-                    method: 'PUT', // PUT request to create a new item
-                    headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    body: JSON.stringify(itemData),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message === 'Dish added') {
-                        alert('Item added successfully');
-                        window.location.href = 'adjustItem.html';
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
                     } else {
-                        alert('Add failed: ' + data.message);
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                    canvas.width = width;
+                    canvas.height = height;
+                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                    const resizedImage = canvas.toDataURL('image/png');
+                    callback(resizedImage);
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function uploadItem(itemData) {
+            fetch('http://localhost:8081/restaurants/food/dish', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(itemData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Dish added') {
+                    alert('Item added successfully');
+                    window.location.href = 'adjustItem.html';
+                } else {
+                    alert('Add failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
 
         function logOut() {

@@ -8,24 +8,32 @@
     <style>
         .food-item {
             position: relative;
+            display: inline-block;
+            margin: 20px;
         }
         .food-item img {
-            width: 70%;
-            transition: opacity 0.3s;
+            width: 150px; /* Adjust width as needed */
+            height: 150px;
+            transition: opacity 0.7s;
         }
         .food-item.selected img {
             opacity: 0.5;
         }
         .food-item button {
             position: absolute;
-            top: 57%;
-            left:59%;
+            top: 60%;
+            left: 65%;
             transform: translate(-50%, -50%);
             padding: 4px 10px;
             font-size: 20px;
             cursor: pointer;
             background-color: #ebebeb88;
             border-radius: 60%;
+        }
+        .menu-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
         }
     </style>
 </head>
@@ -37,9 +45,7 @@
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
                 <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
-                <li class="nav_list"><a href="">About Us</a></li>
-                <li class="nav_list"><a href="">Food Categories</a></li>
-                <li class="nav_list"><a href="index.html">Home</a></li>
+                <li class="nav_list"><a href="/frontend/index.html">Home</a></li>
             </ul>
         </div>
     </header>
@@ -57,17 +63,12 @@
         </div>
     </main>
 
-    <footer>
-        <p>Are you a partner of ROCKETMEAL? <a href="#">Click here to go to partner's page</a></p>
-        <p>&copy; 2024 ROCKETMEAL</p>
-    </footer>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const restaurantId = localStorage.getItem('restaurantId'); // Lấy restaurantId từ localStorage
-            if(!restaurantId)
-            window.location.href = '/FrontEndRestaurant/restaurantLogin.html'
+            const restaurantId = localStorage.getItem('restaurantId');
+            if(!restaurantId) window.location.href = '/FrontEndRestaurant/restaurantLogin.html';
             
-            // Gọi hàm fetch để lấy danh sách món ăn
             localStorage.setItem('selectedBestSeller', JSON.stringify([]));
 
             fetchDishes();
@@ -87,18 +88,13 @@
                 const bestsellerIds = bestsellerDishDtoList.map(dish => dish.id);
 
                 dishDtoList.filter(dish => !bestsellerIds.includes(dish.id))
-                .map(dish => 
-                {
+                .forEach(dish => {
+                    const imageUrl = `/frontend/images/dishes/${dish.name}.png`;
 
-                    const url = 'data:image/png;base64,' + dish.image;
-                    
                     const newFoodItemHTML = `
                         <div class="food-item">
-                            <!-- Image of the food -->
-                            <img src="${url}" alt="">
-                            <!-- Button with "+" sign inside the image -->
+                            <img src="${imageUrl}" alt="${dish.name}">
                             <button onclick="toggleSelection(${dish.id})">+</button>
-                            <!-- Food name and price -->
                             <div class="food-details">
                                 <div class="food-name">${dish.name}</div>
                                 <div class="food-price">$${dish.price}</div>
@@ -107,7 +103,6 @@
                     `;
 
                     const menuGrid = document.querySelector('.menu-grid');
-
                     menuGrid.innerHTML += newFoodItemHTML;
                 });
             }
