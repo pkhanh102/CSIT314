@@ -19,7 +19,6 @@
         }
         main {
             flex: 1;
-
         }
 
         /* Ensure the footer is not growing but only taking the necessary space */
@@ -29,6 +28,34 @@
             text-align: center;
             padding: 1rem;
             flex-shrink: 0;
+        }
+
+        .feedback-button {
+            margin-right: 150px;
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            color: #fff;
+            background-color: #88C56C;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .feedback-button:hover {
+            background-color: #76b35b;
+        }
+
+        .feedback-container {
+            padding-left: 11rem;
+            margin-top: 50px;
+            max-width: 600px;
+            color: aliceblue;
+            margin-left: 400px;
+            text-align: center;
         }
     </style>
 </head>
@@ -82,9 +109,14 @@
         <p>Order delivered! Enjoy your meal<br>
         </p>
     </div>
-    <div style="padding-left:11rem;margin-top: 50px;max-width: 600px;color: aliceblue; margin-left: 400px;">
-        <a href="feedback.html" style="color: aliceblue; text-decoration: underline;">Always ready to hear a feedback from you!</a>
+    <div class="feedback-container">
+        <a href="feedback.html" class="feedback-button">Give a review!</a>
     </div>
 </main>
+    <footer>
+        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

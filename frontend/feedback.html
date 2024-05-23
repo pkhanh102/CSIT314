@@ -13,9 +13,8 @@
         <div>
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
-                <li class="nav_list"><a href="">Login</a></li>
+                <li class="nav_list"><a href="login.html">Login</a></li>
                 <li class="nav_list"><a href="">About Us</a></li>
-                <li class="nav_list"><a href="">Food Categories</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
         </div>
@@ -80,10 +79,14 @@
             // Submit feedback
             document.getElementById('submit-button').addEventListener('click', function() {
                 const feedback = document.getElementById('feedback').value;
+                const customerId = localStorage.getItem('customerId'); // Get customer ID from localStorage
+                const restaurantId = 120; // Example restaurant ID, replace with actual restaurant ID
+                
                 const feedbackDto = {
-                    email: 'example@example.com', // Replace with actual user email
-                    feedback: feedback,
-                    rating: selectedRating
+                    customerId: customerId,
+                    restaurantId: restaurantId,
+                    stars: selectedRating,
+                    content: feedback
                 };
 
                 fetch('http://localhost:8081/customers/feedback', {
