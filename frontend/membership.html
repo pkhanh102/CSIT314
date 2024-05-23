@@ -15,7 +15,7 @@
         <div>
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
-                <li class="nav_list"><a href="">Login</a></li>
+                <li class="nav_list"><a href="login.html" id="login-link">Login</a></li>
                 <li class="nav_list"><a href="">About Us</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
@@ -88,43 +88,58 @@
     </main>
 
     <script>
-        document.querySelectorAll('.button').forEach(button => {
-    button.addEventListener('click', function() {
-        const vipType = this.getAttribute('data-vipType').toUpperCase();
-        const customerId = 2; // You need to get this value from your login process
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const loginLink = document.getElementById('login-link');
 
-        const requestBody = {
-            customerId: customerId,
-            vipType: vipType
-        };
+            if (isLoggedIn !== 'true') {
+                alert('Please log in to access membership options.');
+                window.location.href = 'login.html';
+            }
 
-        fetch('http://localhost:8081/customers/membership', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.message === "Membership registered") {
-                // Redirect to receipt page with membership details
-                window.location.href = `receipt.html?customerId=${customerId}&vipType=${vipType}&price=${this.parentElement.querySelector('.price').innerText}`;
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while registering the membership.');
+            document.querySelectorAll('.button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const vipType = this.getAttribute('data-vipType').toUpperCase();
+                    const customerId = localStorage.getItem('customerId'); // Get customer ID from local storage
+
+                    if (!customerId) {
+                        alert('Customer ID is missing. Please log in again.');
+                        return;
+                    }
+
+                    const requestBody = {
+                        customerId: parseInt(customerId),
+                        vipType: vipType
+                    };
+
+                    fetch('http://localhost:8081/customers/membership', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.message === "Membership registered") {
+                            alert('Membership registered successfully!');
+                            window.location.href = 'index.html';
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while registering the membership.');
+                    });
+                });
+            });
         });
-    });
-});
     </script>
 </body>
 

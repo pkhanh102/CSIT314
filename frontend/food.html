@@ -14,7 +14,6 @@
             <p class="logo_description">30 minutes</p>
             <ul class="navigation_bar">
                 <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
-                <li class="nav_list"><a href="#about-us">About Us</a></li>
                 <li class="nav_list"><a href="index.html">Home</a></li>
             </ul>
         </div>
@@ -142,8 +141,17 @@
                 let url = `http://localhost:8081/customers/restaurants?customerPostcode=${postcode}&keyword=${keyword}&category=${category}&distanceFrom=&distanceTo=&ratingFrom=&ratingTo=`;
     
                 fetch(url)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
+                        console.log(data); // Log the API response
+                        if (!Array.isArray(data)) {
+                            throw new Error('API response is not an array');
+                        }
                         if (currentFilter) {
                             data.sort((a, b) => currentFilter === 'distance' ? a.distance - b.distance : b.stars - a.stars);
                         }
