@@ -58,15 +58,8 @@
         </div>
         <!-- Order Tracker -->
         <div class="tracker">
-            <!-- Step 1 -->
-            <div class="step active">
-                <span class="icon">
-                    <img src="images/card.png" >
-                </span>
-                Payment
-            </div>
-            <!-- Connecting Line  -->
-            <div class="horizontalLine" style="background-color: #88C56C;"></div>
+            
+            
             <!-- Step 2 -->
             <div class="step ongoing">
                 <span class="icon" style="background-color: #88C56C;">
@@ -83,25 +76,21 @@
                 </span>
                 Delivery
             </div>
-            <!-- Connecting Line  -->
-            <div class="horizontalLine"></div>
-            <!-- Step 4 -->
-            <div class="step pending">
-                <span class="icon">
-                    <img src="images/home.png" >
-                </span>
-                Complete
-            </div>
         </div>
         <!-- Additional Information -->
         <p>Order accepted! The order is being delivered. <br>
-            Estimated time: 5 minutes</p>
+            Estimated time: 20 minutes</p>
     </div>
 </main>
     <footer>
         <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
         <p>&copy; 2024 ROCKETMEAL</p>
     </footer>
-    <script src="script.js"></script>
+    <script>
+        // JavaScript to redirect after 1 minute (60000 milliseconds)
+        setTimeout(function() {
+            window.location.href = 'foodTrack3.html';
+        }, 10000); // 10 seconds in milliseconds
+    </script>
 </body>
 </html>

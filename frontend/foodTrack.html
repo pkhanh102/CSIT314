@@ -19,10 +19,7 @@
         }
         main {
             flex: 1;
-
         }
-
-        /* Ensure the footer is not growing but only taking the necessary space */
         footer {
             background-color: #1F1F1F;
             color: #fff;
@@ -33,9 +30,7 @@
     </style>
 </head>
 <body>
-
     <header>
-        <!-- NAVIGATION BAR -->
         <h1 class="logo_name">ROCKETMEAL</h1>
         <div>
             <p class="logo_description">30 minutes</p>
@@ -48,61 +43,48 @@
         </div>
     </header>
 
-<main>
-    <!-- Order Status Section -->
-    <div class="order-status">
-        <div class="status-header">
-            <img src="images/tick.png" >
-            Payment complete! <br>
-            We are processing your order
+    <main>
+        <div class="order-status">
+            <div class="status-header">
+                <img src="images/tick.png">
+                Payment complete! <br>
+                We are processing your order
+            </div>
+            <div class="tracker">
+                <div class="step ongoing">
+                    <span class="icon" style="background-color: #FFFA7C;">
+                        <img src="images/dish.png">
+                    </span>
+                    Preparing
+                </div>
+                <div class="horizontalLine" style="background-color: #ffe100;"></div>
+                <div class="step pending">
+                    <span class="icon">
+                        <img src="images/delivery.png">
+                    </span>
+                    Delivery
+                </div>
+            </div>
+            <p>Waiting for the restaurant to accept and prepare the order. <br>
+               Estimated time: 30 minutes</p>
         </div>
-        <!-- Order Tracker -->
-        <div class="tracker">
-            <!-- Step 1 -->
-            <div class="step active">
-                <span class="icon">
-                    <img src="images/card.png" >
-                </span>
-                Payment
-            </div>
-            <!-- Connecting Line  -->
-            <div class="horizontalLine" style="background-color: #ffe100;"></div>
-            <!-- Step 2 -->
-            <div class="step ongoing">
-                <span class="icon" style="background-color: #FFFA7C;">
-                    <img src="images/dish.png" >
-                </span>
-                Preparing
-            </div>
-            <!-- Step 3 -->
-            <!-- Connecting Line  -->
-            <div class="horizontalLine"></div>
-            <div class="step pending">
-                <span class="icon">
-                    <img src="images/delivery.png" >
-                </span>
-                Delivery
-            </div>
-            <!-- Connecting Line  -->
-            <div class="horizontalLine"></div>
-            <!-- Step 4 -->
-            <div class="step pending">
-                <span class="icon">
-                    <img src="images/home.png" >
-                </span>
-                Complete
-            </div>
-        </div>
-        <!-- Additional Information -->
-        <p>Waiting for the restaurant to accept and prepare the order. <br>
-            Estimated time: 10 minutes</p>
-    </div>
-</main>
+    </main>
+
     <footer>
         <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
         <p>&copy; 2024 ROCKETMEAL</p>
     </footer>
-    <script src="script.js"></script>
-
+    <script>
+        setTimeout(function() {
+            // Generate a random number between 0 and 1
+            var random = Math.random();
+            // 98% chance to go to foodTrack2.html, 2% chance to go to foodTrack4.html
+            if (random <= 0.98) {
+                window.location.href = 'foodTrack2.html';
+            } else {
+                window.location.href = 'foodTrack4.html';
+            }
+        }, 10000); // 10 seconds in milliseconds
+    </script>
 </body>
 </html>

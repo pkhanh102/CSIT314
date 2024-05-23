@@ -88,7 +88,7 @@ body {
     position: relative;
     top: -10px; 
     height: 2px;
-    width: calc(100% / 4); /* There are 4 steps, so we divide by 4 */
+    width: calc(100% / 2); /* There are 4 steps, so we divide by 4 */
     background-color: #ccc;
     z-index: 1;
 }
