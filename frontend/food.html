@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="food.css">
+</head>
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Search bar -->
+        <div class="dropdown">
+            <button class="dropbtn">Filter</button>
+            <div class="dropdown-content">
+                <a href="#" data-filter="distance">By Distance</a>
+                <a href="#" data-filter="rating">By Rating</a>
+            </div>
+        </div>
+
+        <div class="search_container">
+            <form class="search-form" id="search-form">
+                <button type="submit" class="search-button" id="search-button"><img src="images/search.png" alt="Search Icon" class="search-img"></button>
+                <input type="text" placeholder="Search by keyword..." class="search-box" id="search-box">
+            </form>
+        </div>
+
+        <hr>
+
+        <!-- Categories bar -->
+        <section class="category">
+          <h2 class="category-title">Food Categories</h2>
+          <div class="category_container" id="category-container">
+              <div class="category_item" data-category="asian">
+                  <img src="images/category/asian.png" alt="Asian Image" class="category_img">
+                  <p class="category_text"><a href="#">Asian</a></p>
+              </div>
+              <div class="category_item" data-category="fast_food">
+                  <img src="images/category/fastfood.png" alt="Fast Food Image" class="category_img">
+                  <p class="category_text"><a href="#">Fast Food</a></p>
+              </div>
+              <div class="category_item" data-category="mexican">
+                  <img src="images/category/mexico.png" alt="Mexican Image" class="category_img">
+                  <p class="category_text"><a href="#">Mexican</a></p>
+              </div>
+              <div class="category_item" data-category="barbecue">
+                  <img src="images/category/bbq.png" alt="BBQ Image" class="category_img">
+                  <p class="category_text"><a href="#">Barbecue</a></p>
+              </div>
+              <div class="category_item" data-category="healthy">
+                  <img src="images/category/healthy.png" alt="Healthy Food Image" class="category_img">
+                  <p class="category_text"><a href="#">Healthy</a></p>
+              </div>
+              <div class="category_item" data-category="cafe">
+                  <img src="images/category/coffee.png" alt="Coffee Image" class="category_img">
+                  <p class="category_text"><a href="#">Cafes</a></p>
+              </div>
+              <div class="category_item" data-category="milk_tea">
+                  <img src="images/category/milktea.png" alt="Milk Tea Image" class="category_img">
+                  <p class="category_text"><a href="#">Milk Tea</a></p>
+              </div>
+              <div class="category_item" data-category="dessert">
+                  <img src="images/category/dessert.png" alt="Dessert Image" class="category_img">
+                  <p class="category_text"><a href="#">Dessert</a></p>
+              </div>
+          </div>
+        </section>
+
+        <hr>
+        <h2 class="category-title">Restaurants</h2>
+
+        <div id="restaurant-list" class="restaurant-container">
+            <!-- Restaurant items will be dynamically inserted here -->
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('customerId'); // Remove customer ID
+                    window.location.href = 'index.html';
+                });
+            }
+
+            const customerPostcode = localStorage.getItem('customerPostcode');
+            const searchForm = document.getElementById('search-form');
+            const searchBox = document.getElementById('search-box');
+            const filterLinks = document.querySelectorAll('.dropdown-content a');
+            const categoryItems = document.querySelectorAll('.category_item');
+    
+            let currentFilter = '';
+            let currentCategory = '';
+    
+            filterLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentFilter = this.getAttribute('data-filter');
+                    fetchRestaurants(customerPostcode, searchBox.value, currentCategory);
+                });
+            });
+    
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    currentCategory = this.getAttribute('data-category');
+                    fetchRestaurants(customerPostcode, searchBox.value, currentCategory);
+                });
+            });
+    
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                fetchRestaurants(customerPostcode, searchBox.value, currentCategory);
+            });
+    
+            // Fetch restaurants initially with an empty keyword and category
+            fetchRestaurants(customerPostcode, '', '');
+    
+            function fetchRestaurants(postcode, keyword, category) {
+                if (!postcode) {
+                    alert('Customer postcode not found. Please search from the home page.');
+                    return;
+                }
+    
+                let url = `http://localhost:8081/customers/restaurants?customerPostcode=${postcode}&keyword=${keyword}&category=${category}&distanceFrom=&distanceTo=&ratingFrom=&ratingTo=`;
+    
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data); // Log the API response
+                        if (!Array.isArray(data)) {
+                            throw new Error('API response is not an array');
+                        }
+                        if (currentFilter) {
+                            data.sort((a, b) => currentFilter === 'distance' ? a.distance - b.distance : b.stars - a.stars);
+                        }
+                        displayRestaurants(data);
+                    })
+                    .catch(error => console.error('Error fetching restaurants:', error));
+            }
+    
+            function displayRestaurants(restaurants) {
+                const restaurantList = document.getElementById('restaurant-list');
+                restaurantList.innerHTML = ''; // Clear existing restaurants
+    
+                // Create rows for restaurants, 4 items per row
+                let row;
+                restaurants.slice(0, 12).forEach((restaurant, index) => {
+                    if (index % 4 === 0) {
+                        row = document.createElement('div');
+                        row.className = 'restaurant-row';
+                        restaurantList.appendChild(row);
+                    }
+                    const restaurantItem = document.createElement('div');
+                    restaurantItem.className = 'restaurant';
+                    restaurantItem.dataset.id = restaurant.restaurantId; // Store restaurant ID
+                    const imageSrc = `images/restaurants/${restaurant.category}.png`; // Image based on category
+    
+                    restaurantItem.innerHTML = `
+                        <img src="${imageSrc}" alt="${restaurant.name}" class="restaurant-img">
+                        <p class="restaurant-name">${restaurant.name || 'No name'}</p>
+                        <span class="rating">${restaurant.stars || 'No rating'} stars</span>
+                        <span class="distance">${restaurant.distance || '1'} km</span>
+                    `;
+                    row.appendChild(restaurantItem);
+    
+                    // Add click event listener to navigate to restaurant-page.html
+                    restaurantItem.addEventListener('click', function() {
+                        // Store restaurant details in localStorage
+                        localStorage.setItem('selectedRestaurant', JSON.stringify(restaurant));
+                        localStorage.setItem('selectedRestaurantId', restaurant.restaurantId);
+                        window.location.href = `restaurant-page.html?id=${restaurant.restaurantId}`;
+                    });
+                });
+    
+                if (restaurants.length === 0) {
+                    restaurantList.innerHTML = '<p>No restaurants found.</p>';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

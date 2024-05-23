@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="membershipStatus.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div>
+            <img class="bg-image" src="images/membershipBackground.png">
+        </div>
+
+        <div style="margin-top: 200px;" class="bg-text">
+            <h1 style="font-size: 50px; text-align: center;">Membership status</h1>
+
+            <div class="optionBox">
+                <div class="tab">
+                    <button class="tablinks" onclick="openStatus(event, 'Cancel')">Cancel Membership</button>
+                </div>
+
+                <div id="Cancel" class="tabcontent">
+                    <h3 style="font-size: 25px; color: red; text-align: center; margin-bottom: 15px;">Cancel Membership</h3>
+                    <p>We are so sorry to hear that.</p>
+                    <p>Please click on the button below.</p>
+                    <p>Thanks for being a member.</p>
+                    <p>Hope to see you again in a near future.</p>
+                    <button id="cancel-button" class="button" style="margin-top: 150px;">Cancel</button>
+                </div>
+            </div>  
+        </div>
+    </main>
+
+</body>
+
+<script>
+    function openStatus(evt, statusName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(statusName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    document.getElementById('cancel-button').addEventListener('click', function() {
+        const membershipDto = {
+            email: 'example@example.com' // Replace this with actual user email or membership ID
+        };
+
+        fetch('http://localhost:8081/customers/membership', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(membershipDto)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message); // Display the response message
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+</script>
+
+</html>

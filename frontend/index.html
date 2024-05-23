@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
+                <li class="nav_list"><a href="#about-us">About Us</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- MAIN MENU & SEARCH BAR -->
+        <div style="padding-top: 220px; padding-bottom: 230px;">
+            <div class="main_logo">
+                <img id="logo_img" src="images/rkm_logo.png" alt="Rocketmeal Logo" style="width: 80px; height: 80px;">
+                <h1 class="logoname2">ROCKETMEAL</h1>
+            </div>
+            <div class="main_description">
+                <p style="size: 40px;">We pick the best restaurant near you!</p>
+            </div>
+            <div class="search_address">
+                <input type="text" id="postcode-input" class="search_address_input" placeholder="Enter your postcode here" required>
+            </div>
+            <div class="search_address">
+                <button id="search-button" class="continue_button">Continue</button>
+            </div>
+        </div>
+
+        <!-- SUBSCRIPTION BAR -->
+        <div class="subcription_div">
+            <h1 class="subscription_title">Benefits of RocketMeal+</h1>
+            <div class="subscription_container">
+                <div class="subscription_img">
+                    <img class="benefits_img" src="images/v78_592.png" alt="Exclusive Deal">
+                    <img class="benefits_img" src="images/free-delivery.png" alt="Free Delivery" style="background-color: #FFFFFF;"> 
+                    <img class="benefits_img" src="images/promo-code.png" alt="Promo Codes" style="background-color: #FFFFFF;">
+                    <img class="benefits_img" src="images/best-seller.png" alt="$10 per Month" style="background-color: #FFFFFF;">
+                </div> 
+            </div>
+            <div class="subscription_text">
+                <ul>
+                    <li class="sub_list">Exclusive Deals</li>
+                    <li class="sub_list">Free Delivery</li>
+                    <li class="sub_list">Promo Codes</li>
+                    <li class="sub_list">Only $10/Month</li>
+                </ul>
+            </div>
+            <div class="subscribe_input">
+                <button id="subscribe-button" class="subscribe_button">Subscribe Now</button>
+            </div>
+        </div>
+
+        <!-- ABOUT US -->
+        <div id="about-us" class="about_container">
+            <div class="about_box">
+                <h1 class="about_title">About Us</h1>
+                <p class="about_text">Welcome to our innovative platform revolutionizing the way you experience dining! At ROCKETMEAL, we've curated a seamless and convenient solution for food enthusiasts to explore, order, and enjoy delicious meals from a plethora of nearby restaurants.
+                    With our intuitive interface, customers can effortlessly navigate through an extensive array of dining options using our category function. Whether you're craving cozy cafes, vibrant clubs, or exotic Asian cuisine, we've got you covered. But that's not all - our advanced search capabilities enable users to refine their quest by keywords, distance, and ratings, ensuring they discover their perfect dining destination with ease.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Are you a partner of ROCKETMEAL?<a href="/FrontEndRestaurant/restaurantLogin.html" style="text-decoration: underline;"> Click here to go to partner's page</a></p>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+
+    <script>
+        // Check login state and update navigation bar
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Handle search button click
+        document.getElementById('search-button').addEventListener('click', function() {
+            const postcode = document.getElementById('postcode-input').value;
+            if (postcode) {
+                localStorage.setItem('customerPostcode', postcode); // Store the customer postcode
+                window.location.href = 'food.html'; // Redirect to food.html
+            } else {
+                alert('Please enter a postcode.');
+            }
+        });
+
+        // Handle subscribe button click
+        document.getElementById('subscribe-button').addEventListener('click', function() {
+            window.location.href = 'membership.html'; // Redirect to membership.html
+        });
+    </script>
+</body>
+</html>

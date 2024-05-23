@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a href="#about-us">About Us</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="box">
+            <p style="text-align: center; color: #000; font-size: 30px; font-weight: bold;">Login to your account</p>
+            <form id="login-form">
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 90px;" for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+
+                <div class="password_input">
+                    <label style="font-weight: bold;" for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <div class="signup-box">
+            <p id="signup-text">Don't have an account? <a href="signup.html" style="text-decoration: underline;">Click here to sign up!</a></p>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            fetch('http://localhost:8081/customers/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === "Customer logged in") {
+                    alert(data.message);
+                    localStorage.setItem('isLoggedIn', 'true'); // Store login state
+                    localStorage.setItem('customerId', data.customerId); // Store customer ID
+                    window.location.href = 'index.html'; // Redirect to index page
+                } else {
+                    alert(data.message); // Show error message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+
+</html>

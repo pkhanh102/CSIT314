@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="restaurantPage.css">
+    <style>
+        .best_img {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
+                <li class="nav_list"><a href="/frontend/index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- RESTAURANT LOGO, COVER & INFO-->
+        <div class="restaurant_logo" style="margin-top: 60px;">
+            <div class="restaurant_cover">
+                <img id="logo_cover" class="logo_cover" src="" alt="Restaurant Cover">
+                <div class="restaurant_avatar">
+                    <img id="logo_avatar" class="logo_avatar" src="" alt="Restaurant Avatar">
+                </div>
+            </div>
+            
+            <div class="restaurant_info">
+                <div class="restaurant_info_left">
+                    <div class="header_with_button">
+                        <p class="restaurant_name"></p>
+                        <button style="margin-bottom: 20px;" class="add_button_header" id="change_restaurant_info" onclick="location.href='restaurantInfo.html'">
+                            <img src="images/change.png" alt="">
+                        </button>
+                    </div>
+
+                    <div class="text_img" style="width: 90%; margin: auto;">
+                        <img class="star_img" src="images/star.png" alt="Star Image">
+                        <p class="star_text"></p>
+                    </div>
+                </div>
+
+                <div class="restaurant_address">
+                    <div class="text_img">
+                        <img class="info_img" src="images/location-img.png" alt="Location Image">
+                        <p class="info_text info_address"></p>
+                    </div>
+
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/clock.png" alt="Clock Image">
+                        <p class="info_text" style="color: green;">Open to 10PM</p>
+                    </div>
+
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/phone-call.png" alt="Phone Image">
+                        <p class="info_text info_phone"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BEST SELLER -->
+        <div class="best_seller_container" style="margin-left: 180px;">
+            <div class="header_with_button">
+                <h2 class="best_header">Best Seller</h2>
+                <button style="margin-bottom: 20px;" class="add_button_header" id="change_best_seller" onclick="location.href='addBestItem.html'">
+                    <img src="images/change.png" alt="">
+                </button>
+            </div>
+
+            <div class="best_items_container">
+            </div>
+        </div>
+
+        <!-- FULL MENU -->
+        <div class="menu_container" style="margin-left: 180px;">
+            <div class="header_with_button">
+                <h2 class="best_header">Full menu</h2>
+                <button style="margin-bottom: 20px;" class="add_button_header" id="change_menu" onclick="location.href='adjustItem.html'">
+                    <img src="images/change.png" alt="">
+                </button>
+            </div>
+
+            <div class="menu_items_container">
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const restaurantId = localStorage.getItem('restaurantId');
+            if (!restaurantId)
+                window.location.href = 'restaurantLogin.html';
+
+            fetchDishes();
+    
+            function fetchDishes() {
+                fetch(`http://localhost:8081/restaurants/profile?id=${restaurantId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.restaurantDto) {
+                            displayRestaurant(data, data.restaurantDto);
+                            setRestaurantImages(data.restaurantDto.category);
+                        }
+                        if (data.dishDtoList.length > 0)
+                            displayDishes(data.dishDtoList);
+                        if (data.bestsellerDishDtoList.length > 0)
+                            displayBestSeller(data.bestsellerDishDtoList);
+                    })
+                    .catch(error => console.error('Error fetching dishes:', error));
+            }
+
+            function setRestaurantImages(category) {
+                const logoCover = document.getElementById('logo_cover');
+                const logoAvatar = document.getElementById('logo_avatar');
+                logoCover.src = `/frontend/images/covers/${category}.png`;
+                logoAvatar.src = `/frontend/images/restaurants/${category}.png`;
+            }
+
+            function displayBestSeller(dishes) {
+                const bestSellerContainer = document.querySelector('.best_items_container');
+                bestSellerContainer.innerHTML = '';
+
+                let row;
+                dishes.forEach((dish, index) => {
+                    if (index % 6 === 0) {
+                        row = document.createElement('div');
+                        row.classList.add('restaurant-row');
+                        bestSellerContainer.appendChild(row);
+                    }
+                    const dishElement = createDishElement(dish);
+                    row.appendChild(dishElement);
+                });
+            }
+    
+            function displayDishes(dishes) {
+                const fullMenuContainer = document.querySelector('.menu_items_container');
+                fullMenuContainer.innerHTML = '';
+
+                let row;
+                dishes.forEach((dish, index) => {
+                    if (index % 6 === 0) {
+                        row = document.createElement('div');
+                        row.classList.add('restaurant-row');
+                        fullMenuContainer.appendChild(row);
+                    }
+                    const dishElement = createDishElement(dish);
+                    row.appendChild(dishElement);
+                });
+            }
+    
+            function createDishElement(dish) {
+                const dishDiv = document.createElement('div');
+                const imagePath = `/frontend/images/dishes/${dish.name}.png`;
+
+                dishDiv.classList.add('best_img');
+
+                dishDiv.innerHTML = `
+                    <img class="best_item_img" src="${imagePath}" alt="${dish.name} Image">
+                    <button class="add_button" onclick="localStorage.setItem('itemId', ${dish.id});location.href = 'edititem.html';" style="background-color: white;">
+                        <span style="position: relative; top: -5px;">...</span>
+                    </button>
+                    <p class="best_text" style="margin-bottom: 10px;">${dish.name}<br>$${dish.price}</p>
+                `;
+
+                return dishDiv;
+            }
+
+            function editItem(itemId) {
+                localStorage.setItem('itemId', itemId);
+                window.location.href = 'editItem.html';
+            }
+
+            function displayRestaurant(data, info) {
+                const restaurantNames = document.querySelectorAll('.restaurant_name');
+                restaurantNames[0].textContent = info.name;
+                const stars = document.querySelectorAll('.star_text');
+                stars[0].textContent = info.stars + '/5';
+                const info_texts = document.querySelectorAll('.info_address');
+                info_texts[0].textContent = data.address;
+                const phone = document.querySelectorAll('.info_phone');
+                phone[0].textContent = data.phone;
+            }
+        });
+
+        function logOut() {
+            localStorage.removeItem("restaurantId");
+            window.location.href = "restaurantLogin.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal Order Status</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="foodTrack.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            background-color: #4C5050;
+        }
+        main {
+            flex: 1;
+
+        }
+
+        /* Ensure the footer is not growing but only taking the necessary space */
+        footer {
+            background-color: #1F1F1F;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+<main>
+    <!-- Order Status Section -->
+    <div class="order-status">
+        <div class="status-header">
+            <img src="images/tick.png" >
+            Payment complete! <br>
+            We are processing your order
+        </div>
+        <!-- Order Tracker -->
+        <div class="tracker">
+            <!-- Step 1 -->
+            <div class="step ongoing" >
+                <span class="icon" style="background-color: #F05353;">
+                    <img src="images/dish.png">
+                </span>
+                Preparing
+            </div>
+            <!-- Step 3 -->
+            <!-- Connecting Line  -->
+            <div class="horizontalLine" style="background-color: #F05353;"></div>
+            <div class="step pending">
+                <span class="icon">
+                    <img src="images/delivery.png">
+                </span>
+                Delivery
+            </div>
+            
+        </div>
+        <!-- Additional Information -->
+        <p>We are sorry... Your order is rejected by the restaurant.</p>
+    </div>
+    <div style="padding-left:11rem;margin: 50px auto;max-width: 600px;color: aliceblue;">
+        <a href="index.html" style="color: aliceblue; text-decoration: underline;">Click here to make another order</a>
+    </div>
+</main>
+    
+</body>
+</html>

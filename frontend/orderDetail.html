@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="orderDetail.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="box">
+            <b class="receiptHeading">Order Details</b>
+            <hr>
+            <b class="orderFromPlace">Your order from this Restaurant</b>
+            <br>
+            <div id="itemsOrdered">
+                <!-- Order items will be dynamically inserted here -->
+            </div>
+            <hr>
+            <div class="subtotal">
+                <p class="textHeading">Subtotal: </p>
+                <p id="subtotal" class="price">$0.00</p>
+            </div>
+            <div class="deliveryFee">
+                <p class="textHeading">Delivery Fee: </p>
+                <p id="deliveryFee" class="price">$5.00</p>
+            </div>
+            <div class="serviceFee">
+                <p class="textHeading">Service Fee: </p>
+                <p class="price">$5.00</p>
+            </div>
+            <hr>
+            <div class="total">
+                <p class="textHeading">Total: </p>
+                <p id="total" class="price">$0.00</p>
+            </div>
+        </div>
+        <div class="container" style="display: flex; align-items: center; margin-left: 35%;">
+            <button class="buttonText" style="margin-right: 20px;" onclick="window.history.back()">Back</button>
+            <button class="buttonText" id="pay-button">Pay</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('customerId'); // Remove customer ID
+                    window.location.href = 'index.html';
+                });
+            }
+
+            const itemsOrdered = document.getElementById('itemsOrdered');
+            const subtotalElement = document.getElementById('subtotal');
+            const totalElement = document.getElementById('total');
+            const deliveryFeeElement = document.getElementById('deliveryFee');
+            const serviceFee = 5.00;
+            const deliveryFeeDefault = 5.00;
+            let deliveryFee = deliveryFeeDefault;
+
+            const customerId = localStorage.getItem('customerId');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'itemsOrdered';
+
+                itemDiv.innerHTML = `
+                    <p class="quantity">${item.quantity}x</p>
+                    <p class="item">${item.name}</p>
+                    <p class="price">$${(item.price * item.quantity).toFixed(2)}</p>
+                `;
+                itemsOrdered.appendChild(itemDiv);
+
+                subtotal += item.price * item.quantity;
+            });
+
+            // Fetch customer profile to check VIP status
+            fetch(`http://localhost:8081/customers/profile?id=${customerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.vipType !== 'NULL') {
+                        deliveryFee = 0.00; // VIP customers get free delivery
+                    }
+                    updateTotal();
+                })
+                .catch(error => {
+                    console.error('Error fetching customer profile:', error);
+                    updateTotal(); // Update total even if there's an error
+                });
+
+            function updateTotal() {
+                subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+                deliveryFeeElement.textContent = `$${deliveryFee.toFixed(2)}`;
+                const total = subtotal + deliveryFee + serviceFee;
+                totalElement.textContent = `$${total.toFixed(2)}`;
+
+                localStorage.setItem('totalCost', total.toFixed(2)); // Store the total cost in local storage
+            }
+
+            document.getElementById('pay-button').addEventListener('click', function() {
+                window.location.href = 'payment.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

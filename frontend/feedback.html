@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="feedback.css">
+</head>
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="box">
+            <b class="heading">Thanks for choosing us!</b>
+            <br>
+            <b class="heading">Please give us some feedback</b>
+            <div class="status-header">
+                <br>
+                <img id="brand-logo" class="brandLogo" src="images/restaurant-logo-placeholder.png" alt="Restaurant Logo">
+                <div id="star-container" class="star-container"></div>
+                <br>
+                <b id="brand-name" class="brandName">Restaurant Name</b>
+                <div>
+                    <input class="reviewBox" type="text" id="feedback" placeholder="Write your feedback here...">
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <button id="submit-button" class="buttonText">Submit</button>
+        </div>
+        <div style="padding-left:11rem;margin-bottom: 20px; margin-left: 425px;max-width: 600px;color: aliceblue;">
+            <a href="index.html" style="color: aliceblue; text-decoration: underline;">Click here to go back to homepage</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedRating = 0;
+
+            // Retrieve restaurant details from local storage
+            const restaurantName = localStorage.getItem('restaurantName');
+            const restaurantCategory = localStorage.getItem('restaurantCategory');
+
+            if (restaurantName && restaurantCategory) {
+                document.getElementById('brand-name').textContent = restaurantName;
+                document.getElementById('brand-logo').src = `images/restaurants/${restaurantCategory}.png`; // Update logo based on category
+            }
+
+            // Create 5 empty stars initially
+            const starContainer = document.getElementById('star-container');
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('img');
+                star.src = 'images/empty-star.png';
+                star.classList.add('star');
+                star.dataset.rating = i;
+                star.addEventListener('click', function() {
+                    selectedRating = i;
+                    displayStars(selectedRating);
+                });
+                starContainer.appendChild(star);
+            }
+
+            // Update stars based on selected rating
+            function displayStars(rating) {
+                const stars = document.querySelectorAll('.star');
+                stars.forEach(star => {
+                    if (star.dataset.rating <= rating) {
+                        star.src = 'images/star.png';
+                    } else {
+                        star.src = 'images/empty-star.png';
+                    }
+                });
+            }
+
+            // Submit feedback
+            document.getElementById('submit-button').addEventListener('click', function() {
+                const feedback = document.getElementById('feedback').value;
+                const customerId = localStorage.getItem('customerId'); // Get customer ID from localStorage
+                const restaurantId = localStorage.getItem('selectedRestaurantId'); // Get restaurant ID from localStorage
+
+                if (!restaurantId) {
+                    alert('Restaurant ID not found.');
+                    return;
+                }
+
+                const feedbackDto = {
+                    customerId: customerId,
+                    restaurantId: parseInt(restaurantId),
+                    stars: selectedRating,
+                    content: feedback
+                };
+
+                fetch('http://localhost:8081/customers/feedback', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(feedbackDto)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message); // Display the response message
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

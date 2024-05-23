@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Cart Checkout -->
+        <div class="cart_container">
+            <!-- Cart Title -->
+            <h1 class="cart_title">Shopping Cart</h1>
+
+            <!-- Cart Description -->
+            <div class="cart_description">
+                <p>Check your orders before checkout</p>
+            </div>
+
+            <!-- Cart Box -->
+            <div class="cart_box" id="cart-box">
+                <!-- Items will be dynamically inserted here -->
+            </div>
+
+            <!-- Cart Button -->
+            <button class="cart_button" id="checkout-button">Checkout Now</button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check login state and update navigation bar
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('customerId'); // Remove customer ID
+                    window.location.href = 'index.html';
+                });
+            }
+
+            const cartBox = document.getElementById('cart-box');
+            const checkoutButton = document.getElementById('checkout-button');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            function displayCartItems() {
+                cartBox.innerHTML = ''; // Clear existing items
+                cart = cart.filter(item => item.name && item.price && item.quantity > 0); // Filter out invalid items
+
+                cart.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'cart_items';
+
+                    itemDiv.innerHTML = `
+                        <img class="img_items" src="images/dishes/${item.name}.png" alt="${item.name}">
+                        <div class="item_details">
+                            <div class="item_name">${item.name}</div>
+                        </div>
+                        <div class="adjust_btn">
+                            <button class="quantity-btn decrease" data-name="${item.name}">-</button>
+                            <input style="width: 30px; border-radius: 5px; text-align: end;" type="number" value="${item.quantity}" min="1" readonly>
+                            <button class="quantity-btn increase" data-name="${item.name}">+</button>
+                        </div>
+                        <div class="item_price">$${(item.price * item.quantity).toFixed(2)}</div>
+                    `;
+                    cartBox.appendChild(itemDiv);
+                });
+
+                if (cart.length === 0) {
+                    cartBox.innerHTML = '<p>Your cart is empty.</p>';
+                }
+
+                // Add event listeners to quantity buttons
+                document.querySelectorAll('.quantity-btn.decrease').forEach(button => {
+                    button.addEventListener('click', function() {
+                        updateQuantity(this.getAttribute('data-name'), -1);
+                    });
+                });
+                document.querySelectorAll('.quantity-btn.increase').forEach(button => {
+                    button.addEventListener('click', function() {
+                        updateQuantity(this.getAttribute('data-name'), 1);
+                    });
+                });
+            }
+
+            function updateQuantity(name, delta) {
+                const item = cart.find(cartItem => cartItem.name === name);
+                if (item) {
+                    item.quantity += delta;
+                    if (item.quantity <= 0) {
+                        removeFromCart(name);
+                    } else {
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        displayCartItems();
+                    }
+                }
+            }
+
+            function removeFromCart(name) {
+                const index = cart.findIndex(cartItem => cartItem.name === name);
+                if (index !== -1) {
+                    cart.splice(index, 1);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    displayCartItems();
+                }
+            }
+
+            // Handle checkout button click
+            checkoutButton.addEventListener('click', function() {
+                localStorage.setItem('cart', JSON.stringify(cart));
+                window.location.href = 'orderDetail.html';
+            });
+
+            displayCartItems();
+        });
+    </script>
+</body>
+
+</html>

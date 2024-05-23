@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal Order Status</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="foodTrack.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            background-color: #4C5050;
+        }
+        main {
+            flex: 1;
+        }
+
+        /* Ensure the footer is not growing but only taking the necessary space */
+        footer {
+            background-color: #1F1F1F;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            flex-shrink: 0;
+        }
+
+        .feedback-button {
+            margin-right: 150px;
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            color: #fff;
+            background-color: #88C56C;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .feedback-button:hover {
+            background-color: #76b35b;
+        }
+
+        .feedback-container {
+            padding-left: 11rem;
+            margin-top: 50px;
+            max-width: 600px;
+            color: aliceblue;
+            margin-left: 400px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+<main>
+    <!-- Order Status Section -->
+    <div class="order-status">
+        <div class="status-header" >
+            <img src="images/tick.png" >
+            Payment complete! <br>
+            We are processing your order
+        </div>
+        <!-- Order Tracker -->
+        <div class="tracker">
+            
+            <!-- Step 1 -->
+            <div class="step ongoing">
+                <span class="icon" style="background-color: #88C56C;">
+                    <img src="images/dish.png" >
+                </span>
+                Prepared
+            </div>
+            <!-- Step 2 -->
+            <!-- Connecting Line  -->
+            <div class="horizontalLine" style="background-color: #88C56C;"></div>
+            <div class="step pending">
+                <span class="icon" style="background-color: #88C56C;">
+                    <img src="images/delivery.png" >
+                </span>
+                Delivered
+            </div>
+            <!-- Connecting Line  -->
+            
+        </div>
+        <!-- Additional Information -->
+        <p>Order delivered! Enjoy your meal<br>
+        </p>
+    </div>
+    <div class="feedback-container">
+        <a href="feedback.html" class="feedback-button">Give a review!</a>
+    </div>
+</main>
+    <footer>
+        <p>Are you a partner of ROCKETMEAL?<a> Click here to go to partner's page</a></p>
+        <p>&copy; 2024 ROCKETMEAL</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

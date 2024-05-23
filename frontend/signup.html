@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a href="login.html">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="box">
+            <p style="text-align: center; color: #000; font-size: 30px; font-weight: bold;">Sign up a new account</p>
+            <form id="signup-form">
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 100px;" for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 90px;" for="fname">Fname</label>
+                    <input type="text" id="fname" name="fname" required>
+                </div>
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 93px;" for="lname">Lname</label>
+                    <input type="text" id="lname" name="lname" required>
+                </div>
+                <div class="email_input">
+                    <label style="font-weight: bold; padding-right: 97px;" for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+                <div class="password_input">
+                    <label style="font-weight: bold;padding-right: 71px" for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button style="margin-top: 18rem;" type="submit">Sign up</button>
+            </form>
+            <div id="message" style="color: red; text-align: center; margin-top: 10px;"></div>
+        </div>
+        <div style="padding-left:12rem;margin: 100px auto;max-width: 600px;color: aliceblue;">
+            <a href="login.html" style="color: aliceblue;">Click here to back to login page</a>
+        </div>
+    </main>
+    
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('fname').value;
+            const lastName = document.getElementById('lname').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+    
+            const customerSignUpDto = {
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                phoneNumber: phone
+            };
+    
+            fetch('http://localhost:8081/customers/signup', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(customerSignUpDto)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === "Customer account registered") {
+                    alert(data.message);
+                    window.location.href = 'login.html'; // Redirect to login page
+                } else {
+                    messageElement.textContent = data.message; // Show error message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>

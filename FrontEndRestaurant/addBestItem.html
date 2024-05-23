@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Best Item</title>
+    <link rel="stylesheet" href="itemAdjust.css">
+    <style>
+        .food-item {
+            position: relative;
+            display: inline-block;
+            margin: 20px;
+        }
+        .food-item img {
+            width: 150px; /* Adjust width as needed */
+            height: 150px;
+            transition: opacity 0.7s;
+        }
+        .food-item.selected img {
+            opacity: 0.5;
+        }
+        .food-item button {
+            position: absolute;
+            top: 60%;
+            left: 65%;
+            transform: translate(-50%, -50%);
+            padding: 4px 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #ebebeb88;
+            border-radius: 60%;
+        }
+        .menu-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
+                <li class="nav_list"><a href="/frontend/index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section class="menu-section">
+            <h2 style="text-align: center; margin-top: 45px; color: white;">Add Your Best Items To “Best Seller”</h2>
+            <h3 style="text-align: left;margin-top: 48px;color: #D7CFCF;margin-left: 30px;">Full menu</h3>
+            <div class="menu-grid">
+                
+            </div>
+        </section>
+        <div class="button-container">
+            <button class="custom-button" type="button">Done</button>
+        </div>
+    </main>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const restaurantId = localStorage.getItem('restaurantId');
+            if(!restaurantId) window.location.href = '/FrontEndRestaurant/restaurantLogin.html';
+            
+            localStorage.setItem('selectedBestSeller', JSON.stringify([]));
+
+            fetchDishes();
+    
+            function fetchDishes() {
+                fetch(`http://localhost:8081/restaurants/profile?id=${restaurantId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.bestsellerDishDtoList);
+                        console.log(data.dishDtoList);
+                        displayDishesNotInBestSeller(data.dishDtoList, data.bestsellerDishDtoList);
+                    })
+                    .catch(error => console.error('Error fetching dishes:', error));
+            }
+
+            function displayDishesNotInBestSeller(dishDtoList, bestsellerDishDtoList){
+                const bestsellerIds = bestsellerDishDtoList.map(dish => dish.id);
+
+                dishDtoList.filter(dish => !bestsellerIds.includes(dish.id))
+                .forEach(dish => {
+                    const imageUrl = `/frontend/images/dishes/${dish.name}.png`;
+
+                    const newFoodItemHTML = `
+                        <div class="food-item">
+                            <img src="${imageUrl}" alt="${dish.name}">
+                            <button onclick="toggleSelection(${dish.id})">+</button>
+                            <div class="food-details">
+                                <div class="food-name">${dish.name}</div>
+                                <div class="food-price">$${dish.price}</div>
+                            </div>
+                        </div>
+                    `;
+
+                    const menuGrid = document.querySelector('.menu-grid');
+                    menuGrid.innerHTML += newFoodItemHTML;
+                });
+            }
+
+            const doneButton = document.querySelector('.custom-button');
+        
+            doneButton.addEventListener('click', () => {
+                const id = parseInt(localStorage.getItem('restaurantId'));
+                const selectedBestSeller = JSON.parse(localStorage.getItem('selectedBestSeller')).join(',');
+                fetch(`http://localhost:8081/restaurants/food/bestsellers?dishId=${selectedBestSeller}&id=${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Best sellers updated successfully!');
+                    window.location.href = 'restaurantPage.html';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to update best sellers.');
+                });
+            });
+        });
+
+        function toggleSelection(dishId) {
+            const foodItem = document.querySelector(`button[onclick="toggleSelection(${dishId})"]`).parentElement;
+            foodItem.classList.toggle('selected');
+
+            let selectedBestSeller = JSON.parse(localStorage.getItem('selectedBestSeller'));
+            const index = selectedBestSeller.indexOf(dishId);
+            if (index === -1) {
+                selectedBestSeller.push(dishId);
+            } else {
+                selectedBestSeller.splice(index, 1);
+            }
+            localStorage.setItem('selectedBestSeller', JSON.stringify(selectedBestSeller));
+            console.log(selectedBestSeller);
+        }
+
+        function logOut() {
+            localStorage.removeItem("restaurantId");
+            window.location.href = "/FrontEndRestaurant/restaurantLogin.html";
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketMeal</title>
+    <link rel="stylesheet" href="restaurant-page.css">
+</head>
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list"><a id="login-link" href="login.html">Login</a></li>
+                <li class="nav_list"><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- SHOPPING CART -->
+        <div class="cart_container">
+            <button id="cart-button" style="border-radius: 10px;">
+                <img class="cart_logo" src="images/cart.png" alt="Shopping Cart">
+            </button>
+        </div>
+
+        <!-- RESTAURANT LOGO, COVER & INFO -->
+        <div class="restaurant_logo">
+            <div class="restaurant_cover">
+                <img id="logo_cover" class="logo_cover" src="images/restaurant-cover-placeholder.png" alt="Restaurant Cover">
+            </div>
+
+            <div class="restaurant_avatar">
+                <img id="logo_avatar" class="logo_avatar" src="images/restaurant-avatar-placeholder.png" alt="Restaurant Avatar">
+            </div>
+
+            <div class="restaurant_info">
+                <h2 id="restaurant_name" class="restaurant_name">Restaurant Name</h2>
+
+                <div class="text_img">
+                    <img class="star_img" src="images/star.png" alt="Star Image">
+                    <p id="star_text" class="star_text">Rating</p>
+                </div>
+
+                <div id="restaurant_address" class="restaurant_address">
+                    <div class="text_img">
+                        <img class="info_img" src="images/location-img.png" alt="Location Image">
+                        <p id="info_text" class="info_text">Address</p>
+                    </div>
+
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/clock.png" alt="Clock Image">
+                        <p class="info_text" style="color: green;">Open Status</p>
+                    </div>
+
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/phone-call.png" alt="Phone Image">
+                        <p class="info_text">Phone Number</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BEST SELLER -->
+        <div class="best_seller_container" style="margin-left: 100px;">
+            <h2 class="best_header">Best Seller</h2>
+            <div id="best_seller_items" class="best_items_container">
+                <!-- Best seller items will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- FULL MENU -->
+        <div class="menu_container" style="margin-left: 100px;">
+            <h2 class="best_header">Full Menu</h2>
+            <div id="menu_items" class="menu_items_container">
+                <!-- Full menu items will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check login state and update navigation bar
+            const loginLink = document.getElementById('login-link');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn === 'true') {
+                loginLink.textContent = 'Logout';
+                loginLink.href = '#'; // Change to a logout function
+                loginLink.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('customerId'); // Remove customer ID
+                    window.location.href = 'index.html';
+                });
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const restaurantId = params.get('id');
+            const restaurant = JSON.parse(localStorage.getItem('selectedRestaurant'));
+
+            if (restaurantId && restaurant) {
+                // Store restaurant name and category in local storage
+                localStorage.setItem('restaurantName', restaurant.name);
+                localStorage.setItem('restaurantCategory', restaurant.category);
+
+                displayInitialRestaurantDetails(restaurant);
+                fetchRestaurantDetails(restaurantId);
+            } else {
+                alert('Restaurant ID not found.');
+            }
+
+            function fetchRestaurantDetails(id) {
+                const url = `http://localhost:8081/customers/restaurant?id=${id}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Restaurant data:', data); // Log data for debugging
+                        updateRestaurantDetails(data);
+                    })
+                    .catch(error => console.error('Error fetching restaurant details:', error));
+            }
+
+            function displayInitialRestaurantDetails(data) {
+                document.getElementById('logo_cover').src = 'images/covers/' + data.category + '.png';
+                document.getElementById('logo_avatar').src = 'images/restaurants/' + data.category + '.png';
+                document.getElementById('restaurant_name').textContent = data.name || 'No name';
+                document.getElementById('star_text').textContent = `${data.stars || 'No rating'} stars`;
+                document.getElementById('restaurant_address').innerHTML = `
+                    <div class="text_img">
+                        <img class="info_img" src="images/location-img.png" alt="Location Image">
+                        <p class="info_text">${data.address || 'No address'}<br>${data.postCode || ''}</p>
+                    </div>
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/clock.png" alt="Clock Image">
+                        <p class="info_text" style="color: green;">Open to ${data.endTime || 'No time'}</p>
+                    </div>
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/phone-call.png" alt="Phone Image">
+                        <p class="info_text">${data.phone || 'No phone'}</p>
+                    </div>
+                `;
+            }
+
+            function updateRestaurantDetails(data) {
+                // Update the details with additional data from the backend
+                document.getElementById('restaurant_address').innerHTML = `
+                    <div class="text_img">
+                        <img class="info_img" src="images/location-img.png" alt="Location Image">
+                        <p class="info_text">${data.address || 'No address'}<br>${data.postCode || ''}</p>
+                    </div>
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/clock.png" alt="Clock Image">
+                        <p class="info_text" style="color: green;">Open to ${data.endTime || 'No time'}</p>
+                    </div>
+                    <hr>
+                    <div class="text_img" style="padding-top: 20px;">
+                        <img class="info_img" src="images/phone-call.png" alt="Phone Image">
+                        <p class="info_text">${data.phone || 'No phone'}</p>
+                    </div>
+                `;
+
+                displayItems(data.bestsellerDishDtoList, 'best_seller_items');
+                displayItems(data.dishDtoList, 'menu_items');
+            }
+
+            function displayItems(items, containerId) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = ''; // Clear existing items
+
+                let row;
+                items.forEach((item, index) => {
+                    if (index % 6 === 0) {
+                        row = document.createElement('div');
+                        row.className = 'restaurant-row';
+                        container.appendChild(row);
+                    }
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'best_img';
+
+                    // Construct the image path using the dish name
+                    const imageSrc = `images/dishes/${item.name}.png`;
+
+                    itemDiv.innerHTML = `
+                        <img class="best_item_img" src="${imageSrc}" alt="${item.name}">
+                        <button class="add_button" data-name="${item.name}" data-price="${item.price}" data-id="${item.id}">+</button>
+                        <p class="best_text">${item.name}<br>$${item.price}</p>
+                    `;
+                    row.appendChild(itemDiv);
+                });
+
+                if (items.length === 0) {
+                    container.innerHTML = '<p>No items found.</p>';
+                }
+
+                // Add event listeners to "Add" buttons
+                const addButtons = container.querySelectorAll('.add_button');
+                addButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const name = this.getAttribute('data-name');
+                        const price = parseFloat(this.getAttribute('data-price'));
+                        const id = parseInt(this.getAttribute('data-id'));
+                        addToCart({ id, name, price });
+                    });
+                });
+            }
+
+            function addToCart(item) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find(cartItem => cartItem.id === item.id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ ...item, quantity: 1 });
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert('Item added to cart!');
+            }
+
+            // Navigate to shopping cart page
+            document.getElementById('cart-button').addEventListener('click', function() {
+                window.location.href = 'shoppingCart.html';
+            });
+
+        });
+    </script>
+</body>
+</html>

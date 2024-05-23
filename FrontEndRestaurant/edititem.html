@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Item</title>
+    <link rel="stylesheet" href="itemAdjust.css">
+</head>
+<body>
+    <header>
+        <!-- NAVIGATION BAR -->
+        <h1 class="logo_name">ROCKETMEAL</h1>
+        <div>
+            <p class="logo_description">30 minutes</p>
+            <ul class="navigation_bar">
+                <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
+                <li class="nav_list"><a href="/frontend/index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="box">
+            <p style="color: #000; font-size: 30px; font-weight: bold; text-align:center;">Edit Item</p>
+            <form id="editForm">
+                <div class="input">
+                    <label style="font-weight: bold; padding-right: 90px;" for="itemname">Item name</label>
+                    <input type="text" id="itemname" name="itemname">
+                </div>
+                <div class="input">
+                    <label style="font-weight: bold; padding-right: 80px;" for="description">Description</label>
+                    <input type="text" id="description" name="description">
+                </div>
+                <div class="input">
+                    <label style="font-weight: bold; padding-right: 130px;" for="price">Price</label>
+                    <input type="number" id="price" name="price">
+                </div>
+                <div class="input">
+                    <label style="font-weight: bold; padding-right: 70px;">Upload Image</label>
+                    <input style="margin-left: -4px;" type="file" id="imageUpload" name="imageUpload" accept="image/*">
+                </div>
+                <div class="image-preview" id="imagePreview">
+                    <img src="" alt="Image Preview" class="imageDisplay" style="display:none; width: 300px; height:200px;">
+                    <span class="defaultText">Image Preview</span>
+                </div>
+            </form>
+        </div>
+        <div class="button-container">
+            <button class="custom-button" type="button" onclick="cancelEdit()">Cancel</button>
+            <button class="custom-button" type="button" onclick="saveEdit()">Done</button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const restaurantId = localStorage.getItem('restaurantId');
+            if (!restaurantId)
+                window.location.href = '/FrontEndRestaurant/restaurantLogin.html';
+
+            const itemId = JSON.parse(localStorage.getItem('itemId'));
+            if (itemId)
+                getDish(itemId);
+
+            const imageUpload = document.getElementById('imageUpload');
+            const imagePreview = document.getElementById('imagePreview');
+            const imageDisplay = imagePreview.querySelector('.imageDisplay');
+            const defaultText = imagePreview.querySelector('.defaultText');
+
+            imageUpload.addEventListener('change', () => {
+                const file = imageUpload.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        imageDisplay.src = reader.result;
+                        imageDisplay.style.display = 'block';
+                        defaultText.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    imageDisplay.style.display = 'none';
+                    defaultText.style.display = 'block';
+                }
+            });
+        });
+
+        function getDish(itemId) {
+            fetch(`http://localhost:8081/restaurants/food/dish?dishId=${itemId}`, {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('itemname').value = data.name;
+                    document.getElementById('description').value = data.description;
+                    document.getElementById('price').value = data.price;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function cancelEdit() {
+            window.location.href = 'adjustItem.html';
+        }
+
+        function saveEdit() {
+            const itemId = parseInt(localStorage.getItem('itemId'));
+            if (!itemId) {
+                alert('Item ID is missing.');
+                return;
+            }
+
+            const file = document.getElementById('imageUpload').files[0];
+            const itemData = {
+                id: itemId,
+                restaurantId: parseInt(localStorage.getItem('restaurantId')),
+                name: document.getElementById('itemname').value,
+                description: document.getElementById('description').value,
+                price: parseFloat(document.getElementById('price').value),
+                image: ''
+            };
+
+            if (file) {
+                resizeImage(file, 100, 100, (resizedImage) => {
+                    itemData.image = resizedImage.split(',')[1];
+                    uploadItem(itemData);
+                });
+            } else {
+                uploadItem(itemData);
+            }
+        }
+
+        function resizeImage(file, maxWidth, maxHeight, callback) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                    const resizedImage = canvas.toDataURL('image/png');
+                    callback(resizedImage);
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function uploadItem(itemData) {
+            fetch('http://localhost:8081/restaurants/food/dish', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(itemData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Dish updated') {
+                    alert('Item updated successfully');
+                    window.location.href = 'restaurantPage.html';
+                } else {
+                    alert('Update failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function logOut() {
+            localStorage.removeItem("restaurantId");
+            window.location.href = "/FrontEndRestaurant/restaurantLogin.html";
+        }
+    </script>
+</body>
+</html>

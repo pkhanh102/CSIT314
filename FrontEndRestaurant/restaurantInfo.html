@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information</title>
+    <link rel="stylesheet" href="itemAdjust.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <!-- NAVIGATION BAR -->
+            <h1 class="logo_name">ROCKETMEAL</h1>
+            <div>
+                <p class="logo_description">30 minutes</p>
+                <ul class="navigation_bar">
+                    <li class="nav_list" onclick="logOut()"><a href="">Logout</a></li>
+                    <li class="nav_list"><a href="/frontend/index.html">Home</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <main>
+            <div class="box">
+                <p style="color: #000; font-size: 30px; font-weight: bold; text-align:center;">Restaurant Info</p>
+                <form id="infoForm">
+                    <table>
+                        <tr>
+                            <td><label style="font-weight: bold;">Restaurant name</label></td>
+                            <td><input type="text" id="name"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">Address</label></td>
+                            <td><input type="text" id="address"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">PostCode</label></td>
+                            <td><input type="text" id="postCode"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">Start time</label></td>
+                            <td><input type="time" id="startTime"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">End time</label></td>
+                            <td><input type="time" id="endTime"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">Phone number</label></td>
+                            <td><input type="text" id="phoneNumber"></td>
+                        </tr>
+                        <tr>
+                            <td><label style="font-weight: bold;">Category</label></td>
+                            <td><input type="text" id="category"></td>
+                        </tr>
+                    </table>
+                    <div class="button-container">
+                        <button class="custom-button" type="button" onclick="updateRestaurantInfo()">Done</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const restaurantId = localStorage.getItem('restaurantId'); // Lấy restaurantId từ localStorage
+            if (!restaurantId) window.location.href = '/FrontEndRestaurant/restaurantLogin.html';
+
+            // Gọi hàm fetch để lấy danh sách món ăn
+            fetchInfoRestaurant();
+
+            function fetchInfoRestaurant() {
+                fetch(`http://localhost:8081/restaurants/profile?id=${restaurantId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        displayRestaurant(data.restaurantDto.name, data.address, data.phone, data.restaurantDto.category);
+                    })
+                    .catch(error => console.error('Error fetching restaurant:', error));
+            }
+
+            function displayRestaurant(name, address, phoneNumber, category) {
+                var inputName = document.getElementById("name");
+                inputName.value = name;
+                var inputAddress = document.getElementById("address");
+                inputAddress.value = address;
+                var inputPhoneNumber = document.getElementById("phoneNumber");
+                inputPhoneNumber.value = phoneNumber;
+                var inputCategory = document.getElementById("category");
+                inputCategory.value = category;
+            }
+        });
+
+        function updateRestaurantInfo() {
+            const restaurantId = localStorage.getItem('restaurantId');
+            const restaurantIdInt = parseInt(restaurantId, 10);
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const postCode = document.getElementById('postCode').value;
+            const postCodeInt = parseInt(postCode, 10);
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const category = document.getElementById('category').value;
+
+            // Save to local storage
+            const restaurantInfo = {
+                id: restaurantIdInt,
+                name: name,
+                address: address,
+                postCode: postCodeInt,
+                startTime: startTime,
+                endTime: endTime,
+                phone: phoneNumber,
+                category: category
+            };
+            localStorage.setItem('restaurantInfo', JSON.stringify(restaurantInfo));
+
+            // Send update request
+            sendUpdateRequest(restaurantInfo);
+        }
+
+        function sendUpdateRequest(updateData) {
+            fetch('http://localhost:8081/restaurants/info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Restaurant info updated') {
+                        alert('Information updated successfully');
+                        window.location.href = 'restaurantPage.html';
+                    } else {
+                        alert('Update failed: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function logOut() {
+            localStorage.removeItem("restaurantId");
+            window.location.href = "/FrontEndRestaurant/restaurantLogin.html";
+        }
+    </script>
+</body>
+</html>
