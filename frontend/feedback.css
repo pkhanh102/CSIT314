@@ -109,11 +109,13 @@ button{
     position: relative;
   }
 .brandLogo{
-    margin-top: 10px;
     margin-left: 50px;
     width: 100px;
+    height: 100px;
     display: inline-block;
     margin-right: 250px;
+    border-radius: 50px;
+    margin-bottom: 10px;
 }
 .star{
     height: 40px;

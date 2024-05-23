@@ -27,10 +27,10 @@
             <b class="heading">Please give us some feedback</b>
             <div class="status-header">
                 <br>
-                <img class="brandLogo" src="images/macca-logo.png">
+                <img id="brand-logo" class="brandLogo" src="images/restaurant-logo-placeholder.png" alt="Restaurant Logo">
                 <div id="star-container" class="star-container"></div>
                 <br>
-                <b class="brandName">McDonalds</b>
+                <b id="brand-name" class="brandName">Restaurant Name</b>
                 <div>
                     <input class="reviewBox" type="text" id="feedback" placeholder="Write your feedback here...">
                 </div>
@@ -52,6 +52,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let selectedRating = 0;
+
+            // Retrieve restaurant details from local storage
+            const restaurantName = localStorage.getItem('restaurantName');
+            const restaurantCategory = localStorage.getItem('restaurantCategory');
+
+            if (restaurantName && restaurantCategory) {
+                document.getElementById('brand-name').textContent = restaurantName;
+                document.getElementById('brand-logo').src = `images/restaurants/${restaurantCategory}.png`; // Update logo based on category
+            }
 
             // Create 5 empty stars initially
             const starContainer = document.getElementById('star-container');
@@ -83,11 +92,16 @@
             document.getElementById('submit-button').addEventListener('click', function() {
                 const feedback = document.getElementById('feedback').value;
                 const customerId = localStorage.getItem('customerId'); // Get customer ID from localStorage
-                const restaurantId = 120; // Example restaurant ID, replace with actual restaurant ID
-                
+                const restaurantId = localStorage.getItem('selectedRestaurantId'); // Get restaurant ID from localStorage
+
+                if (!restaurantId) {
+                    alert('Restaurant ID not found.');
+                    return;
+                }
+
                 const feedbackDto = {
                     customerId: customerId,
-                    restaurantId: restaurantId,
+                    restaurantId: parseInt(restaurantId),
                     stars: selectedRating,
                     content: feedback
                 };
