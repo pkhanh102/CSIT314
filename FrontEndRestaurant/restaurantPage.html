@@ -118,7 +118,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             const restaurantId = localStorage.getItem('restaurantId'); // Lấy restaurantId từ localStorage
             if(!restaurantId)
-                window.location.href = '/FrontEndRestaurant/restaurantLogin.html'
+                window.location.href = '    restaurantLogin.html'
 
             // Gọi hàm fetch để lấy danh sách món ăn
             fetchDishes();
@@ -202,7 +202,7 @@
 
         function logOut() {
             localStorage.removeItem("restaurantId");
-            window.location.href = "/FrontEndRestaurant/restaurantLogin.html";
+            window.location.href = "restaurantInfo.html";
         }
     </script>
     

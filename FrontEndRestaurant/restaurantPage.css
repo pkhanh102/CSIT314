@@ -245,7 +245,11 @@ a {
 }
 
 .best_items_container {
-    padding-bottom: 40px;
+    padding-bottom: 30px;
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
 }
 
 .best_text {
