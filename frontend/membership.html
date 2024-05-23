@@ -53,7 +53,7 @@
                         </li>
                     </ul>
                 </div>
-                <button class="button" data-vipType="MONTHLY" style="margin-top: 15px; margin-left: 90px;">Subscribe</button>
+                <button class="button" data-viptype="MONTHLY" style="margin-top: 15px; margin-left: 90px;">Subscribe</button>
             </div>  
   
             <div class="optionBox">
@@ -77,7 +77,7 @@
                         </li>   
                     </ul>  
                 </div>
-                <button class="button" data-vipType="YEARLY" style="margin-top: 15px; margin-left: 90px;">Subscribe</button>
+                <button class="button" data-viptype="YEARLY" style="margin-top: 15px; margin-left: 90px;">Subscribe</button>
             </div>  
             <div style="padding-left:11rem;margin: 50px auto;max-width: 600px;color: aliceblue;">
                 <a href="membershipStatus.html" style="color: aliceblue; text-decoration: underline;">Click here to cancel the membership status</a>
@@ -98,7 +98,7 @@
 
             document.querySelectorAll('.button').forEach(button => {
                 button.addEventListener('click', function() {
-                    const vipType = this.getAttribute('data-vipType').toUpperCase();
+                    const vipType = this.getAttribute('data-viptype').toUpperCase();
                     const customerId = localStorage.getItem('customerId'); // Get customer ID from local storage
 
                     if (!customerId) {
